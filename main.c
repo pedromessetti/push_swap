@@ -6,59 +6,57 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:33:31 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/01 15:34:24 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:24:16 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#define STACK_LENGHT 11
 
-int	top = -1;
-int	stack[STACK_LENGHT];
-
-int	push(int value)
+void	printchain(void)
 {
-	if (top >= STACK_LENGHT - 1)
-		return (0);
-	top++;
-	stack[top] = value;
-	return (1);
-}
-
-int	pop(void)
-{
-	int	result;
-
-	if (top == -1)
-		return (INT_MIN);
-	result = stack[top];
-	top--;
-	return (result);
+	printf("\n");
+	for (size_t i = 0; i < 20; i++)
+		printf("-=");
+	printf("\n");
 }
 
 int	main(int ac, char **av)
 {
 	int i;
-	char **result;
+	char **args;
+	stack_node stack_a;
+	stack_node stack_b;
+	char *chain;
+	chain = "-=";
 
-	if (ac == 2)
+	stack_a.top = NULL;
+	stack_b.top = NULL;
+	if (ac >= 2)
 	{
-		result = ft_split(av[1], ' ');
-		printf("Unsorted args: %s\n", av[1]);
+		args = ft_split(av[1], 32);
 		i = -1;
-		while (result[++i])
-		{
-			stack[i] = ft_atoi(result[i]);
-			printf("push(%i)\n", stack[i]);
-		}
-		insertion_sort(stack, STACK_LENGHT);
-		printf("Sorted args:");
-		for (size_t i = 0; i < STACK_LENGHT; i++)
-		{
-			printf(" %i ", stack[i]);
-		}
+		while (args[++i])
+			push(&stack_a, ft_atoi(args[i]));
+		printchain();
+		printf("\nstack_a: ");
+		printStack(&stack_a);
+		printf("stack_b: ");
+		printStack(&stack_b);
+		printchain();
+		ft_swap(&stack_a);
+		printf("\nsa\n\nstack_a: ");
+		printStack(&stack_a);
+		printchain();
+		pb(&stack_a, &stack_b);
+		pb(&stack_a, &stack_b);
+		pb(&stack_a, &stack_b);
+		printf("\npb pb pb\n\nstack_a: ");
+		printStack(&stack_a);
+		printf("\nstack_b: ");
+		printStack(&stack_b);
+		printchain();
 	}
 	else
-		return (write(1, "error\n", 6));
+		return (write(1, "Error\n", 6));
 	return (0);
 }

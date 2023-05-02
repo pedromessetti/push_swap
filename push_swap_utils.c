@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/01 09:33:16 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/01 10:03:36 by pmessett         ###   ########.fr       */
+/*   Created: 2023/05/02 09:04:34 by pmessett          #+#    #+#             */
+/*   Updated: 2023/05/02 11:17:01 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	insertion_sort(int *list, int size)
+void	printStack(stack_node *stack)
 {
-	int i, j, aux;
-	i = 0;
-	while (i < size - 1)
+	stack_node	*current;
+
+	current = stack->top;
+	while (current)
 	{
-		if (list[i] > list[i + 1])
-		{
-			aux = list[i + 1];
-			list[i + 1] = list[i];
-			list[i] = aux;
-			j = i - 1;
-			while (j >= 0)
-			{
-				if (aux < list[j])
-				{
-					list[j + 1] = list[j];
-					list[j] = aux;
-				}
-				else
-					break ;
-				j--;
-			}
-		}
-		i++;
+		printf("%d ", current->value);
+		current = current->next;
 	}
+	printf("\n");
+}
+
+void	push(stack_node *stack, int value)
+{
+	stack_node *new_node;
+
+	new_node = (struct stack_node *)malloc(sizeof(stack_node));
+	if (!new_node)
+		return ;
+	new_node->value = value;
+	new_node->next = stack->top;
+	stack->top = new_node;
 }

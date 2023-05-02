@@ -7,10 +7,13 @@ CME = ar -rcs
 
 FLAGS = -Wall -Wextra -Werror
 
-ARGS = "7 -11 12 83 9 2 0 43 -9 -3 5"
+ARGS = "8 5 6 3 1 2"
 
-SRCS = push_swap.c \
-utils.c \
+SRCS = ft_utils.c \
+ft_swap.c \
+ft_push.c \
+push_swap_utils.c \
+lst_utils.c \
 main.c
 
 OBJS = $(SRCS:.c=.o)
