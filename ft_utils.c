@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/01 15:29:02 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:25:17 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_isdigit(int c)
+int	ft_isnumeric(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);
@@ -112,7 +112,7 @@ int	ft_atoi(const char *nptr)
 		sign = -1;
 		i++;
 	}
-	while (ft_isdigit(nptr[i]))
+	while (ft_isnumeric(nptr[i]))
 	{
 		result *= 10;
 		result += nptr[i] - 48;

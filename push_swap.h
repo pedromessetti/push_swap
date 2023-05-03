@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/02 15:21:09 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:39:44 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,33 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct stack_node
+typedef struct s_stack
 {
-	int					value;
-	int					index;
-	struct stack_node	*top;
-	struct stack_node	*prev;
-	struct stack_node	*next;
-}						stack_node;
+	int				value;
+	struct s_stack	*top;
+	struct s_stack	*next;
+}					t_stack;
 
 /* --- General functions --- */
-size_t					ft_strlen(const char *s);
-int						ft_atoi(const char *nptr);
-int						ft_isdigit(int c);
-char					**ft_split(char const *s, char c);
 
-/* --- Push Swap functions --- */
-void					ft_swap(stack_node *stack);
-void					push(stack_node *stack, int value);
-void					printStack(stack_node *stack);
-void					pb(stack_node *a, stack_node *b);
-void					pa(stack_node *a, stack_node *b);
+size_t				ft_strlen(const char *s);
+int					ft_atoi(const char *nptr);
+int					ft_isnumeric(int c);
+char				**ft_split(char const *s, char c);
 
-/* --- List functions --- */
-int						ft_lstsize(stack_node *lst);
+/* --- Operation functions --- */
+
+void				push(t_stack *stack, int value);
+void				pb(t_stack *a, t_stack *b);
+void				pa(t_stack *a, t_stack *b);
+void				swap(t_stack *stack);
+void				rotate(t_stack *stack);
+void				reverse_rotate(t_stack *stack);
+
+/* --- Stack functions --- */
+
+int					stack_size(t_stack *stack);
+void				free_stack(t_stack *stack);
+void				print_stack(t_stack *stack);
 
 #endif

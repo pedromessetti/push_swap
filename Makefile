@@ -10,10 +10,8 @@ FLAGS = -Wall -Wextra -Werror
 ARGS = "8 5 6 3 1 2"
 
 SRCS = ft_utils.c \
-ft_swap.c \
-ft_push.c \
-push_swap_utils.c \
-lst_utils.c \
+stack_utils.c \
+operations.c \
 main.c
 
 OBJS = $(SRCS:.c=.o)
