@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/03 11:25:17 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:19:04 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,23 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_isnumeric(int c)
+int	ft_isnumeric(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[0] == 45 && ft_isdigit(s[1]))
+		i++;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);
@@ -94,11 +110,11 @@ char	**ft_split(char const *s, char c)
 	return (new_s);
 }
 
-int	ft_atoi(const char *nptr)
+long int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	result;
+	int			i;
+	int			sign;
+	long int	result;
 
 	i = 0;
 	sign = 1;
@@ -112,11 +128,23 @@ int	ft_atoi(const char *nptr)
 		sign = -1;
 		i++;
 	}
-	while (ft_isnumeric(nptr[i]))
+	while (ft_isdigit(nptr[i]))
 	{
 		result *= 10;
 		result += nptr[i] - 48;
 		i++;
 	}
 	return (result * sign);
+}
+
+int	check_for_dup(long int tmp, char **av, int i)
+{
+	i++;
+	while (av[i])
+	{
+		if (ft_atoi(av[i]) == tmp)
+			return (1);
+		i++;
+	}
+	return (0);
 }

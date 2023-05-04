@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/03 11:49:26 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:28:55 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,26 @@ int	stack_size(t_stack *stack)
 	return (count);
 }
 
-/* Function that free the allocated memory for the stack */
-void	free_stack(t_stack *stack)
+/* Free the allocated memory for the stacks */
+void	free_stacks(t_stack *a, t_stack *b)
 {
 	t_stack	*current;
 	t_stack	*tmp;
 
-	current = stack->top;
+	current = a->top;
 	while (current)
 	{
 		tmp = current;
 		current = current->next;
 		free(tmp);
 	}
-	free(stack);
+	free(a);
+	current = b->top;
+	while (current)
+	{
+		tmp = current;
+		current = current->next;
+		free(tmp);
+	}
+	free(b);
 }

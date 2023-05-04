@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:41:58 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/03 12:38:40 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:43:48 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* --- Push Functions ---*/
 
+/* Push a value into a stack */
 void	push(t_stack *stack, int value)
 {
 	t_stack	*new_node;
@@ -33,6 +34,7 @@ void	pb(t_stack *a, t_stack *b)
 	if (!a->top)
 		return ;
 	tmp = a->top;
+	// write(1, &tmp, 1);
 	a->top = a->top->next;
 	tmp->next = b->top;
 	b->top = tmp;
