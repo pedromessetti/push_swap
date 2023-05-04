@@ -6,12 +6,14 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/04 11:19:04 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:41:00 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/* Calculates the length of the string pointed by s,
+	excluding  the  terminating null byte ('\0') */
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -20,29 +22,6 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-int	ft_isnumeric(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s[0] == 45 && ft_isdigit(s[1]))
-		i++;
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
 }
 
 static int	ft_mem(char const *s, char c)
@@ -110,7 +89,9 @@ char	**ft_split(char const *s, char c)
 	return (new_s);
 }
 
-long int	ft_atoi(const char *nptr)
+/* Converts the string pointed by nptr to an int 
+	Return the string converted to int */
+long	ft_atoi(const char *nptr)
 {
 	int			i;
 	int			sign;
@@ -128,23 +109,11 @@ long int	ft_atoi(const char *nptr)
 		sign = -1;
 		i++;
 	}
-	while (ft_isdigit(nptr[i]))
+	while (is_digit(nptr[i]))
 	{
 		result *= 10;
 		result += nptr[i] - 48;
 		i++;
 	}
 	return (result * sign);
-}
-
-int	check_for_dup(long int tmp, char **av, int i)
-{
-	i++;
-	while (av[i])
-	{
-		if (ft_atoi(av[i]) == tmp)
-			return (1);
-		i++;
-	}
-	return (0);
 }

@@ -7,11 +7,12 @@ CME = ar -rcs
 
 FLAGS = -Wall -Wextra -Werror
 
-ARGS = "8 5 6 3 1 2"
+ARGS = "8 8 5 6 3 1 2"
 
 SRCS = ft_utils.c \
 stack_utils.c \
 operations.c \
+check_args.c \
 main.c
 
 OBJS = $(SRCS:.c=.o)
@@ -34,4 +35,3 @@ compile: re
 
 run: compile
 	@rm -f *.o $(NAME)
-	@./push_swap $(ARGS)

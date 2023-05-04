@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/04 11:19:45 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:06:09 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ typedef struct s_stack
 /* --- General functions --- */
 
 size_t				ft_strlen(const char *s);
-long int			ft_atoi(const char *nptr);
-int					ft_isdigit(int c);
-int					ft_isnumeric(char *s);
+long				ft_atoi(const char *nptr);
+int					is_digit(char c);
+int					is_numeric(char *s);
 char				**ft_split(char const *s, char c);
-int					check_for_dup(long int tmp, char **av, int i);
+int					check_for_dup(long tmp, char **av, int i);
 
 /* --- Operation functions --- */
 
@@ -50,5 +50,14 @@ void				reverse_rotate(t_stack *stack);
 int					stack_size(t_stack *stack);
 void				free_stacks(t_stack *a, t_stack *b);
 void				print_stack(t_stack *stack);
+t_stack				*init_stack(t_stack *stack);
+
+/* --- Sort Functions --- */
+
+int					stack_is_sorted(t_stack *a);
+
+/* --- Check functions --- */
+
+void				check_and_push(char **args, t_stack *a, t_stack *b, int i);
 
 #endif

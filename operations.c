@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:41:58 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/03 18:43:48 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:26:37 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,25 @@
 
 /* --- Push Functions ---*/
 
-/* Push a value into a stack */
+/* Push a value to the end of the stack */
 void	push(t_stack *stack, int value)
 {
 	t_stack	*new_node;
+	t_stack	*current;
 
-	new_node = (t_stack *)malloc(sizeof(t_stack));
-	if (!new_node)
-		return ;
+	if (!(new_node = (t_stack *)malloc(sizeof(t_stack))))
+		exit(1);
 	new_node->value = value;
-	new_node->next = stack->top;
-	stack->top = new_node;
+	new_node->next = NULL;
+	if (!stack->top)
+		stack->top = new_node;
+	else
+	{
+		current = stack->top;
+		while (current->next)
+			current = current->next;
+		current->next = new_node;
+	}
 }
 
 void	pb(t_stack *a, t_stack *b)
