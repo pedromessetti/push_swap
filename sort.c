@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/05 19:38:26 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/10 23:18:52 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 /* Check if the stack is already sorted
    Return 1 if the stack is sorted
    Return 0 if the stack is not sorted */
-int	stack_is_sorted(t_stack *a)
+int	stack_is_sorted(stack_head *a)
 {
 	int		prev_value;
-	t_stack	*current;
+	stack_node	*current;
 
-	if (!a->top || !a->top->next)
+	if (!a->head || !a->head->next)
 		return (1);
-	prev_value = a->top->value;
-	current = a->top->next;
+	prev_value = a->head->value;
+	current = a->head->next;
 	while (current)
 	{
 		if (current->value < prev_value)
@@ -35,13 +35,13 @@ int	stack_is_sorted(t_stack *a)
 	return (1);
 }
 
-int	find_smallest(t_stack *stack)
+int	find_smallest(stack_head *stack)
 {
 	int		smallest;
-	t_stack	*current;
+	stack_node	*current;
 
-	smallest = stack->top->value;
-	current = stack->top->next;
+	smallest = stack->head->value;
+	current = stack->head->next;
 	while (current)
 	{
 		if (current->value < smallest)
@@ -51,13 +51,13 @@ int	find_smallest(t_stack *stack)
 	return (smallest);
 }
 
-int	find_largest(t_stack *stack)
+int	find_largest(stack_head *stack)
 {
 	int		largest;
-	t_stack	*current;
+	stack_node	*current;
 
-	largest = stack->top->value;
-	current = stack->top->next;
+	largest = stack->head->value;
+	current = stack->head->next;
 	while (current)
 	{
 		if (current->value > largest)
@@ -67,19 +67,19 @@ int	find_largest(t_stack *stack)
 	return (largest);
 }
 
-void	sort_stack(t_stack *a, t_stack *b, int ac)
+void	sort_stack(stack_head *a, stack_head *b, int ac)
 {
 	int	smallest;
 	int	largest;
 	int	i;
 
 	i = 0;
-	while (a->top)
+	while (a->head)
 	{
 		smallest = find_smallest(a);
-		while (a->top->value != smallest)
+		while (a->head->value != smallest)
 		{
-			if (a->top->index > i / 2)
+			if (a->head->index > i / 2)
 				rra(a);
 			else
 				ra(a);
@@ -88,21 +88,20 @@ void	sort_stack(t_stack *a, t_stack *b, int ac)
 		i++;
 	}
 	largest = find_largest(b);
-	while (stack_size(a) != ac - 2)
+	while (stack_size(a) != ac - 1)
 	{
-		if (stack_size(a) != ac - 2 && b->top->value == largest)
+		if (stack_size(a) != ac - 1 && b->head->value == largest)
 		{
 			if (stack_size(a) - 2 != ac)
 				pa(a, b);
-			printf("value1: %d, value2: %d\n", stack_size(a), ac - 2);
-			if (stack_size(a) != ac - 2)
+			if (stack_size(a) != ac - 1)
 				largest = find_largest(b);
 		}
-		if (stack_size(a) != ac - 2 && b->top->index > i / 2)
+		if (stack_size(a) != ac - 1 && b->head->index > i / 2)
 		{
 			rrb(b);
 		}
-		else if (stack_size(a) != ac - 2)
+		else if (stack_size(a) != ac - 1)
 			rb(b);
 		i--;
 	}

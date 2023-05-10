@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/08 09:36:32 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/10 22:41:41 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_for_dup(long tmp, char **av, int i)
 }
 
 /* Check if there are correct arguments and pushes them to the stack */
-void	check_and_push(int ac, char **av, t_stack *a, t_stack *b)
+void	check_and_push(char **av, stack_head *a, stack_head *b)
 {
 	int		i;
 	long	tmp;
