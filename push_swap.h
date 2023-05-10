@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/04 16:06:09 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:31:46 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
+# define DECIMAL 0123456789
+# define BINARY 01
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -23,6 +25,7 @@
 typedef struct s_stack
 {
 	int				value;
+	int				index;
 	struct s_stack	*top;
 	struct s_stack	*next;
 }					t_stack;
@@ -33,17 +36,25 @@ size_t				ft_strlen(const char *s);
 long				ft_atoi(const char *nptr);
 int					is_digit(char c);
 int					is_numeric(char *s);
-char				**ft_split(char const *s, char c);
 int					check_for_dup(long tmp, char **av, int i);
 
 /* --- Operation functions --- */
 
-void				push(t_stack *stack, int value);
+void				push(t_stack *stack, int value, int i);
 void				pb(t_stack *a, t_stack *b);
 void				pa(t_stack *a, t_stack *b);
 void				swap(t_stack *stack);
+void				sa(t_stack *a);
+void				sb(t_stack *b);
+void				ss(t_stack *a, t_stack *b);
 void				rotate(t_stack *stack);
+void				ra(t_stack *a);
+void				rb(t_stack *b);
+void				rr(t_stack *a, t_stack *b);
 void				reverse_rotate(t_stack *stack);
+void				rra(t_stack *a);
+void				rrb(t_stack *b);
+void				rrr(t_stack *a, t_stack *b);
 
 /* --- Stack functions --- */
 
@@ -55,9 +66,12 @@ t_stack				*init_stack(t_stack *stack);
 /* --- Sort Functions --- */
 
 int					stack_is_sorted(t_stack *a);
+void				sort_stack(t_stack *a, t_stack *b, int ac);
+int					find_largest(t_stack *stack);
+int					find_smallest(t_stack *stack);
 
 /* --- Check functions --- */
 
-void				check_and_push(char **args, t_stack *a, t_stack *b, int i);
+void				check_and_push(int ac, char **av, t_stack *a, t_stack *b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/04 16:07:59 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:36:32 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,22 @@ int	check_for_dup(long tmp, char **av, int i)
 }
 
 /* Check if there are correct arguments and pushes them to the stack */
-void	check_and_push(char **args, t_stack *a, t_stack *b, int i)
+void	check_and_push(int ac, char **av, t_stack *a, t_stack *b)
 {
-	long tmp;
-	while (args[++i])
+	int		i;
+	long	tmp;
+
+	i = 0;
+	while (av[++i])
 	{
-		if (!is_numeric(args[i]))
+		tmp = ft_atoi(av[i]);
+		if (!is_numeric(av[i]) || check_for_dup(tmp, av, i) || (tmp > INT_MAX
+				|| tmp < INT_MIN))
 		{
 			free_stacks(a, b);
-			write(2, "Error: non integer argument\n", 28);
+			write(2, "Error\n", 6);
 			exit(1);
 		}
-		tmp = ft_atoi(args[i]);
-		if (check_for_dup(tmp, args, i))
-		{
-			free_stacks(a, b);
-			write(2, "Error: duplicate arguments\n", 27);
-			exit(1);
-		}
-		if (tmp >= INT_MAX || tmp <= INT_MIN)
-		{
-			free_stacks(a, b);
-			write(2, "Error: argument is bigger/smaller than an integer\n", 50);
-			exit(1);
-		}
-		push(a, tmp);
+		push(a, tmp, i - 1);
 	}
 }

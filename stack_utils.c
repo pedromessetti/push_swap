@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/04 15:24:48 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:15:42 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	free_stacks(t_stack *a, t_stack *b)
 /* Initialize and set the allocated memory for the stack */
 t_stack	*init_stack(t_stack *stack)
 {
-	stack = NULL;
-	if (!(stack = (t_stack *)malloc(sizeof(t_stack))))
+	stack = (t_stack *)malloc(sizeof(t_stack));
+	if (!stack)
 		exit(1);
 	return (stack);
 }
