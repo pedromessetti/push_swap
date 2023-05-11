@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 16:19:35 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:51:22 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,50 @@ int	stack_is_sorted(t_stack *a)
 	return (1);
 }
 
+int	find_smallest(t_stack **stack)
+{
+	int		smallest;
+	int		count;
+	t_stack	*current;
+	t_stack	*tmp;
+
+	count = 0;
+	tmp = *stack;
+	smallest = (*stack)->value;
+	current = *stack;
+	while (current)
+	{
+		if (current->value < smallest)
+			smallest = current->value;
+		current = current->next;
+	}
+	while (tmp->value != smallest)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	return (count);
+}
+
 void	sort_stack(t_stack **a, t_stack **b)
 {
-    t_stack	*current;
-
-    if (!*a || !(*a)->next)
-        return ;
-    while (*a)
-    {
-        current = *a;
-        *a = (*a)->next;
-        if (!*b || current->value > (*b)->value)
-            pb(&current, b);
-        else
-        {
-            while (*b && current->value < (*b)->value)
-                rb(b);
-            pb(&current, b);
-            while (*b && (*b)->value < find_last(*b)->value)
-                rrb(b);
-        }
-    }
-    while (*b)
-        rb(b);
-    while (*b)
-    {
-        current = *b;
-        *b = (*b)->next;
-        pa(a, &current);
-    }
+	if (!*a || !(*a)->next)
+		return ;
+	while (*a)
+	{
+		if (find_smallest(a) > (stack_size(a) / 2))
+		{
+			while (find_smallest(a) != 0)
+				rra(a);
+			pb(a, b);
+		}
+		else
+		{
+			while (find_smallest(a) != 0)
+				ra(a);
+			pb(a, b);
+		}
+	}
+	while (*b)
+		pa(a, b);
 }
