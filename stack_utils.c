@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/10 22:59:14 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/11 16:23:11 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /* Function that iterates into the stack and prints each value */
-void	print_stack(stack_head *stack)
+void	print_stack(t_stack **stack)
 {
-	stack_node	*current;
+	t_stack	*current;
 
-	current = stack->head;
+	current = *stack;
 	while (current)
 	{
 		printf("%d ", current->value);
@@ -27,15 +27,15 @@ void	print_stack(stack_head *stack)
 }
 
 /* Function that iterates into the stack and returns the total size of it */
-int	stack_size(stack_head *stack)
+int	stack_size(t_stack **stack)
 {
-	int			count;
-	stack_node	*current;
+	int		count;
+	t_stack	*current;
 
 	if (!stack)
 		return (0);
 	count = 0;
-	current = stack->head;
+	current = *stack;
 	while (current)
 	{
 		count++;
@@ -45,34 +45,59 @@ int	stack_size(stack_head *stack)
 }
 
 /* Free the allocated memory for the stacks */
-void	free_stacks(stack_head *a, stack_head *b)
+void	free_stacks(t_stack **stack)
 {
-	stack_node	*current;
-	stack_node	*tmp;
+	t_stack	*tmp;
 
-	current = a->head;
-	while (current)
+	if (!stack)
+		return ;
+	while (*stack)
 	{
-		tmp = current;
-		current = current->next;
-		free(tmp);
+		tmp = (*stack)->next;
+		(*stack)->value = 0;
+		free(*stack);
+		(*stack) = tmp;
 	}
-	free(a);
-	current = b->head;
-	while (current)
-	{
-		tmp = current;
-		current = current->next;
-		free(tmp);
-	}
-	free(b);
 }
 
 /* Initialize and set the allocated memory for the stack */
-stack_head	*init_stack(stack_head *stack)
+t_stack	*init_stack(void)
 {
-	stack = (stack_head *)malloc(sizeof(stack_head));
+	t_stack *stack;
+	
+	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
 		exit(1);
 	return (stack);
+}
+
+void	add_tail(t_stack **stack_head, t_stack *new_node)
+{
+	if (!stack_head)
+		return ;
+	if (!*stack_head)
+		*stack_head = new_node;
+	else
+		(find_last(*stack_head))->next = new_node;
+}
+
+t_stack	*find_last(t_stack *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack->next)
+		stack = stack->next;
+	return (stack);
+}
+
+t_stack	*add_node(int value)
+{
+	t_stack	*new_node;
+
+	new_node = (t_stack *)malloc(sizeof(t_stack));
+	if (!new_node)
+		return (NULL);
+	new_node->value = value;
+	new_node->next = NULL;
+	return (new_node);
 }

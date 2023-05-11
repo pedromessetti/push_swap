@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/10 22:53:46 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/11 16:24:43 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,60 +22,59 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct stack_node
+typedef struct s_stack
 {
-	int					value;
-	int					index;
-	struct stack_node	*next;
-}						stack_node;
-
-typedef struct stack_head
-{
-	struct stack_node	*head;
-}						stack_head;
+	int				value;
+	int				index;
+	struct s_stack	*prev;
+	struct s_stack	*next;
+}					t_stack;
 
 /* --- General functions --- */
 
-size_t					ft_strlen(const char *s);
-long					ft_atoi(const char *nptr);
-int						is_digit(char c);
-int						is_numeric(char *s);
-int						check_for_dup(long tmp, char **av, int i);
+size_t				ft_strlen(const char *s);
+long				ft_atoi(const char *nptr);
+int					is_digit(char c);
+int					is_numeric(char *s);
+int					check_for_dup(long tmp, char **av, int i);
 
 /* --- Operation functions --- */
 
-void					push(stack_head *stack, int value, int i);
-void					pb(stack_head *a, stack_head *b);
-void					pa(stack_head *a, stack_head *b);
-void					swap(stack_head *stack);
-void					sa(stack_head *a);
-void					sb(stack_head *b);
-void					ss(stack_head *a, stack_head *b);
-void					rotate(stack_head *stack);
-void					ra(stack_head *a);
-void					rb(stack_head *b);
-void					rr(stack_head *a, stack_head *b);
-void					reverse_rotate(stack_head *stack);
-void					rra(stack_head *a);
-void					rrb(stack_head *b);
-void					rrr(stack_head *a, stack_head *b);
+void				push(t_stack **stack, int value, int i);
+void				pb(t_stack **a, t_stack **b);
+void				pa(t_stack **a, t_stack **b);
+void				swap(t_stack **stack);
+void				sa(t_stack **a);
+void				sb(t_stack **b);
+void				ss(t_stack **a, t_stack **b);
+void				rotate(t_stack **stack);
+void				ra(t_stack **a);
+void				rb(t_stack **b);
+void				rr(t_stack **a, t_stack **b);
+void				reverse_rotate(t_stack **stack);
+void				rra(t_stack **a);
+void				rrb(t_stack **b);
+void				rrr(t_stack **a, t_stack **b);
 
 /* --- Stack functions --- */
 
-int						stack_size(stack_head *stack);
-void					free_stacks(stack_head *a, stack_head *b);
-void					print_stack(stack_head *stack);
-stack_head				*init_stack(stack_head *stack);
+int					stack_size(t_stack **stack);
+void				free_stacks(t_stack **stack);
+void				print_stack(t_stack **stack);
+t_stack				*init_stack(void);
+t_stack				*add_node(int value);
+t_stack				*find_last(t_stack *stack);
+void				add_tail(t_stack **stack_head, t_stack *new_node);
 
 /* --- Sort Functions --- */
 
-int						stack_is_sorted(stack_head *a);
-void					sort_stack(stack_head *a, stack_head *b, int ac);
-int						find_largest(stack_head *stack);
-int						find_smallest(stack_head *stack);
+int					stack_is_sorted(t_stack *a);
+void				sort_stack(t_stack **a, t_stack **b);
+int					find_largest(t_stack **stack);
+int					find_smallest(t_stack **stack);
 
 /* --- Check functions --- */
 
-void					check_and_push(char **av, stack_head *a, stack_head *b);
+void				check_and_push(char **av, t_stack **a);
 
 #endif

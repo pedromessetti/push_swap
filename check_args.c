@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/10 22:41:41 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/11 16:26:10 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_for_dup(long tmp, char **av, int i)
 }
 
 /* Check if there are correct arguments and pushes them to the stack */
-void	check_and_push(char **av, stack_head *a, stack_head *b)
+void	check_and_push(char **av, t_stack **a)
 {
 	int		i;
 	long	tmp;
@@ -69,10 +69,13 @@ void	check_and_push(char **av, stack_head *a, stack_head *b)
 		if (!is_numeric(av[i]) || check_for_dup(tmp, av, i) || (tmp > INT_MAX
 				|| tmp < INT_MIN))
 		{
-			free_stacks(a, b);
+			free_stacks(a);
 			write(2, "Error\n", 6);
 			exit(1);
 		}
-		push(a, tmp, i - 1);
+		if(!*a)
+			*a = add_node(tmp);
+		else
+			add_tail(a, add_node(tmp));
 	}
 }

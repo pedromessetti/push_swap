@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:41:58 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/10 20:12:12 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/11 16:11:23 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,78 +14,52 @@
 
 /* ---------- Push ---------- */
 
-/* Push a value to the end of the stack */
-void	push(stack_head *stack, int value, int i)
-{
-	stack_node	*new_node;
-	stack_node	*current;
-
-	new_node = (stack_node *)malloc(sizeof(stack_node));
-	if (!new_node)
-		exit(1);
-	new_node->value = value;
-	new_node->index = i;
-	new_node->next = NULL;
-	if (!stack->head)
-		stack->head = new_node;
-	else
-	{
-		current = stack->head;
-		while (current->next)
-			current = current->next;
-		current->next = new_node;
-	}
-}
-
 /* Take the first element at the top of a and put it at the top of b. */
-void	pb(stack_head *a, stack_head *b)
+void	pb(t_stack **a, t_stack **b)
 {
-	stack_node	*node;
+	t_stack	*tmp;
 
-	if (!a->head)
+	if (!*a)
 		return ;
-	node = a->head;
-	a->head = a->head->next;
-	node->next = b->head;
-	b->head = node;
+	tmp = *b;
+	*b = *a;
+	*a = (*a)->next;
+	(*b)->next = tmp;
 	write(1, "pb\n", 3);
 }
 
 /* Take the first element at the top of b and put it at the top of a. */
-void	pa(stack_head *a, stack_head *b)
+void	pa(t_stack **a, t_stack **b)
 {
-	stack_node	*node;
+	t_stack	*tmp;
 
-	if (!b->head)
+	if (!*b)
 		return ;
-	node = b->head;
-	b->head = b->head->next;
-	node->next = a->head;
-	a->head = node;
+	tmp = *a;
+	*a = *b;
+	*b = (*b)->next;
+	(*a)->next = tmp;
 	write(1, "pa\n", 3);
 }
 
 /* ---------- Swap ---------- */
 
 /* Swap the first 2 elements at the top of the stack passes as parameter */
-void	swap(stack_head *stack)
+void	swap(t_stack **stack)
 {
-	stack_node	*first;
-	stack_node	*second;
-	int			tmp;
+	t_stack	*tmp;
 
-	if (!stack->head || !stack->head->next)
+	if (!*stack || !(*stack)->next)
 		return ;
-	first = stack->head;
-	second = stack->head->next;
-	tmp = first->value;
-	first->value = second->value;
-	second->value = tmp;
+	tmp = *stack;
+	*stack = (*stack)->next;
+	tmp->next = (*stack)->next;
+	(*stack)->next = tmp;
 }
 
 /* Swap the first 2 elements at the top of stack a.
 Do nothing if there is only one or no elements. */
-void	sa(stack_head *a)
+void	sa(t_stack **a)
 {
 	swap(a);
 	write(1, "sa\n", 3);
@@ -93,14 +67,14 @@ void	sa(stack_head *a)
 
 /* Swap the first 2 elements at the top of stack b.
 Do nothing if there is only one or no elements. */
-void	sb(stack_head *b)
+void	sb(t_stack **b)
 {
 	swap(b);
 	write(1, "sb\n", 3);
 }
 
 /* Swap the first 2 elements at the top of the stack a and b at the same time */
-void	ss(stack_head *a, stack_head *b)
+void	ss(t_stack **a, t_stack **b)
 {
 	sa(a);
 	sb(b);
@@ -110,23 +84,22 @@ void	ss(stack_head *a, stack_head *b)
 
 /* Main function for rotate elements of the stack 
 The first element becomes the last one */
-void	rotate(stack_head *stack)
+void	rotate(t_stack **stack)
 {
-	stack_node	*last;
+	t_stack	*tmp;
 
-	if (!stack->head || !stack->head->next)
+	if (!*stack || !(*stack)->next)
 		return ;
-	last = stack->head;
-	while (last->next)
-		last = last->next;
-	last->next = stack->head;
-	stack->head = stack->head->next;
-	last->next->next = NULL;
+	tmp = *stack;
+	*stack = find_last(*stack);
+	(*stack)->next = tmp;
+	*stack = tmp->next;
+	tmp->next = NULL;
 }
 
 /* Shift up all elements of stack a by 1.
 The first element becomes the last one */
-void	ra(stack_head *a)
+void	ra(t_stack **a)
 {
 	rotate(a);
 	write(1, "ra\n", 3);
@@ -134,14 +107,14 @@ void	ra(stack_head *a)
 
 /*Shift up all elements of stack b by 1.
 The first element becomes the last one */
-void	rb(stack_head *b)
+void	rb(t_stack **b)
 {
 	rotate(b);
 	write(1, "rb\n", 3);
 }
 
 /* Execute rotate of the stack a and b at the same time */
-void	rr(stack_head *a, stack_head *b)
+void	rr(t_stack **a, t_stack **b)
 {
 	ra(a);
 	rb(b);
@@ -151,23 +124,32 @@ void	rr(stack_head *a, stack_head *b)
 
 /* Main function for rotate elements of the stack 
 The last element becomes the first one */
-void	reverse_rotate(stack_head *stack)
+void	reverse_rotate(t_stack **stack)
 {
-	stack_node	*to_last;
+	t_stack	*tmp;
+	int		i;
 
-	if (!stack->head || !stack->head->next)
+	i = 0;
+	if (!stack || !(*stack)->next)
 		return ;
-	to_last = stack->head;
-	while (to_last->next->next)
-		to_last = to_last->next;
-	to_last->next->next = stack->head;
-	stack->head = to_last->next;
-	to_last->next = NULL;
+	tmp = *stack;
+	while ((*stack)->next)
+	{
+		*stack = (*stack)->next;
+		i++;
+	}
+	(*stack)->next = tmp;
+	while (i > 1)
+	{
+		tmp = tmp->next;
+		i--;
+	}
+	tmp->next = NULL;
 }
 
 /* Shift down all elements of stack a by 1.
 The last element becomes the first one. */
-void	rra(stack_head *a)
+void	rra(t_stack **a)
 {
 	reverse_rotate(a);
 	write(1, "rra\n", 4);
@@ -175,14 +157,14 @@ void	rra(stack_head *a)
 
 /* Shift down all elements of stack b by 1.
 The last element becomes the first one. */
-void	rrb(stack_head *b)
+void	rrb(t_stack **b)
 {
 	reverse_rotate(b);
 	write(1, "rrb\n", 4);
 }
 
 /* Execute reverse rotate of the stack a and b at the same time */
-void	rrr(stack_head *a, stack_head *b)
+void	rrr(t_stack **a, t_stack **b)
 {
 	rra(a);
 	rrb(b);
