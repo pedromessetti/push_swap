@@ -14,20 +14,20 @@ SRCS = $(*.c)
 OBJS = $(SRCS:.c=.o)
 
 $(NAME):	$(OBJS)
-	@$(CME) $(NAME) $(OBJS)
+	$(CME) $(NAME) $(OBJS)
 
 all:	$(NAME)
 
 clean:
-	@rm -f *.o
+	rm -f *.o
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re:	fclean all
 
 compile: re
-	@$(CC) $(FLAGS) *.c -o push_swap
+	$(CC) $(FLAGS) *.c -o push_swap
 
 run: compile
-	@rm -f *.o $(NAME)
+	rm -f *.o $(NAME)

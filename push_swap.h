@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 16:24:43 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:10:11 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_stack
 {
 	int				value;
 	int				index;
-	struct s_stack	*prev;
+	// struct s_stack	*prev;
 	struct s_stack	*next;
 }					t_stack;
 
@@ -40,7 +40,6 @@ int					check_for_dup(long tmp, char **av, int i);
 
 /* --- Operation functions --- */
 
-void				push(t_stack **stack, int value, int i);
 void				pb(t_stack **a, t_stack **b);
 void				pa(t_stack **a, t_stack **b);
 void				swap(t_stack **stack);
@@ -72,6 +71,8 @@ int					stack_is_sorted(t_stack *a);
 void				sort_stack(t_stack **a, t_stack **b);
 int					find_largest(t_stack **stack);
 int					find_smallest(t_stack **stack);
+void				define_sort(t_stack **a, int ac);
+void				sort_stack_of_3(t_stack **a);
 
 /* --- Check functions --- */
 

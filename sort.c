@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 19:51:22 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:37:44 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ int	stack_is_sorted(t_stack *a)
 		prev_value = current->value;
 		current = current->next;
 	}
-	write(1, "Stack already sorted\n", 21);
+	// write(1, "Stack already sorted\n", 21);
 	return (1);
 }
 
+/*Finds the smallest value on the stack and returns his position related to the top*/
 int	find_smallest(t_stack **stack)
 {
 	int		smallest;
@@ -58,6 +59,52 @@ int	find_smallest(t_stack **stack)
 		count++;
 	}
 	return (count);
+}
+
+int	find_largest(t_stack **stack)
+{
+	int		largest;
+	int		count;
+	t_stack	*current;
+	t_stack	*tmp;
+
+	count = 0;
+	tmp = *stack;
+	largest = (*stack)->value;
+	current = *stack;
+	while (current)
+	{
+		if (current->value > largest)
+			largest = current->value;
+		current = current->next;
+	}
+	while (tmp->value != largest)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	return (count);
+}
+
+void	define_sort(t_stack **a, int ac)
+{
+	if (!*a || !(*a)->next)
+		return ;
+	if (ac == 3)
+		sort_stack_of_3(a);
+}
+
+void	sort_stack_of_3(t_stack **a)
+{
+	while (!stack_is_sorted((*a)))
+	{
+		if ((find_smallest(a) == 1 && find_largest(a) == 2) || (find_smallest(a) == 2 && find_largest(a) == 0) || (find_smallest(a) == 0 && find_largest(a) == 1))
+			sa(a);
+		else if((find_smallest(a) == 2 && find_largest(a) == 1))
+			rra(a);
+		else
+			ra(a);
+	}
 }
 
 void	sort_stack(t_stack **a, t_stack **b)

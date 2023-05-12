@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:33:31 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 19:51:31 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:35:39 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	main(int ac, char **av)
 	check_and_push(av, &stack_a);
 	if (stack_is_sorted(stack_a))
 		exit(1);
-	sort_stack(&stack_a, &stack_b);
+	define_sort(&stack_a, ac-1);
+	print_stack(&stack_a);
+	// print_stack(&stack_b);
 	free_stacks(&stack_a);
 	free_stacks(&stack_b);
 	return (0);
