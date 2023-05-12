@@ -71,8 +71,9 @@ int					stack_is_sorted(t_stack *a);
 void				sort_stack(t_stack **a, t_stack **b);
 int					find_largest(t_stack **stack);
 int					find_smallest(t_stack **stack);
-void				define_sort(t_stack **a, int ac);
+void				define_sort(t_stack **a,t_stack **b, int ac);
 void				sort_stack_of_3(t_stack **a);
+void				sort_stack_of_5(t_stack **a, t_stack **b);
 
 /* --- Check functions --- */
 

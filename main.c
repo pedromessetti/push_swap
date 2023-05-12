@@ -24,9 +24,9 @@ int	main(int ac, char **av)
 	check_and_push(av, &stack_a);
 	if (stack_is_sorted(stack_a))
 		exit(1);
-	define_sort(&stack_a, ac-1);
+	define_sort(&stack_a, &stack_b, ac-1);
 	print_stack(&stack_a);
-	// print_stack(&stack_b);
+	print_stack(&stack_b);
 	free_stacks(&stack_a);
 	free_stacks(&stack_b);
 	return (0);

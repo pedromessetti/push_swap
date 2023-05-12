@@ -86,12 +86,14 @@ int	find_largest(t_stack **stack)
 	return (count);
 }
 
-void	define_sort(t_stack **a, int ac)
+void	define_sort(t_stack **a, t_stack **b, int ac)
 {
 	if (!*a || !(*a)->next)
 		return ;
 	if (ac == 3)
 		sort_stack_of_3(a);
+	if (ac == 5)
+		sort_stack_of_5(a, b);
 }
 
 void	sort_stack_of_3(t_stack **a)
@@ -105,6 +107,26 @@ void	sort_stack_of_3(t_stack **a)
 		else
 			ra(a);
 	}
+}
+/*
+Nao funciona
+1 2 3 5 4
+1 2 4 5 3
+*/
+void	sort_stack_of_5(t_stack **a, t_stack **b)
+{
+	pb(a, b);
+	pb(a, b);
+	sort_stack_of_3(a);
+	print_stack(a);
+	print_stack(b);
+	if (find_largest(b) == 0 && !stack_is_sorted((*b)))
+		sb(b);
+	pa(a, b);
+	ra(a);
+	pa(a, b);
+	if (!stack_is_sorted((*a)) && find_smallest(a) == 4)
+		rra(a);
 }
 
 void	sort_stack(t_stack **a, t_stack **b)
