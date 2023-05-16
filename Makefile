@@ -27,7 +27,7 @@ fclean: clean
 re:	fclean all
 
 compile: re
-	$(CC) $(FLAGS) *.c -o push_swap
+	$(CC)  *.c -o push_swap
 
 run: compile
 	rm -f *.o $(NAME)

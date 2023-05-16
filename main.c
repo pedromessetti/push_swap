@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:33:31 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/14 12:14:56 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/16 07:58:38 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main(int ac, char **av)
 	check_and_push(av, &stack_a);
 	if (stack_is_sorted(&stack_a))
 		exit(1);
-	define_sort(&stack_a, &stack_b);
-	//print_stack(&stack_a);
-	//print_stack(&stack_b);
+	insertion_sort(&stack_a, &stack_b);
+	print_stack(&stack_a);
+	print_stack(&stack_b);
 	free_stacks(&stack_a);
 	free_stacks(&stack_b);
 	return (0);

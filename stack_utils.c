@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 16:23:11 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:52:46 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	free_stacks(t_stack **stack)
 /* Initialize and set the allocated memory for the stack */
 t_stack	*init_stack(void)
 {
-	t_stack *stack;
-	
+	t_stack	*stack;
+
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
 		exit(1);
@@ -100,4 +100,18 @@ t_stack	*add_node(int value)
 	new_node->value = value;
 	new_node->next = NULL;
 	return (new_node);
+}
+
+int	find_pos_on_stack(t_stack **stack, int value_to_find)
+{
+	t_stack *curr = *stack;
+	int i = 0;
+	while (curr)
+	{
+		if (curr->value == value_to_find)
+			return (i);
+		i++;
+		curr = curr->next;
+	}
+	return (-1);
 }

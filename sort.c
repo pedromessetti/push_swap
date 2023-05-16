@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/14 21:49:42 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/16 10:12:42 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ int	stack_is_sorted(t_stack **stack)
 		current = current->next;
 	}
 	// write(1, "Stack already sorted\n", 21);
+	return (1);
+}
+
+int	is_sorted(t_stack *stack)
+{
+	while (stack && stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
+	}
 	return (1);
 }
 
@@ -73,13 +84,13 @@ void	define_sort(t_stack **a, t_stack **b)
 }
 
 // Finds the minimum value in the stack
-int	find_min_value(t_stack *stack)
+int	find_min_value(t_stack **stack)
 {
 	int		min_val;
 	t_stack	*current;
 
 	min_val = INT_MAX;
-	current = stack;
+	current = *stack;
 	while (current != NULL)
 	{
 		if (current->value < min_val)
@@ -92,13 +103,13 @@ int	find_min_value(t_stack *stack)
 }
 
 // Finds the maximum value in the stack
-int	find_max_value(t_stack *stack)
+int	find_max_value(t_stack **stack)
 {
 	int		max_val;
 	t_stack	*current;
 
 	max_val = INT_MIN;
-	current = stack;
+	current = *stack;
 	while (current != NULL)
 	{
 		if (current->value > max_val)
@@ -135,32 +146,6 @@ int	find_largest(t_stack **stack)
 	return (max_pos);
 }
 
-int	find_pivot(t_stack **a, int size)
-{
-	t_stack	*tmp;
-	int		i;
-
-	tmp = (*a);
-	i = -1;
-	while (++i < size / 2)
-		tmp = tmp->next;
-	return (tmp->value);
-}
-
-void	partition(t_stack **a, t_stack **b, int pivot)
-{
-	int size = stack_size(a);
-	while (size > 0)
-	{
-		if ((*a)->value < pivot)
-			pb(a, b);
-		else
-			ra(a);
-		size--;
-	}
-	
-}
-
 void	sort_stack_of_2(t_stack **a)
 {
 	if ((*a)->value > (*a)->next->value)
@@ -185,21 +170,153 @@ void	sort_stack_of_3(t_stack **a)
 
 void	sort_stack(t_stack **a, t_stack **b)
 {
-	int	pivot;
-	int size = stack_size(a);
+	int		hold_first;
+	int		hold_second;
+	int		move_count_first;
+	int		move_count_second;
+	int		hold_sec_pos;
+	t_stack	*current;
+	int		size;
+	int		current_value;
 
-	if (!*a || !(*a)->next || stack_is_sorted(a))
+	if (!*a)
 		return ;
-	else if( size == 2)
-		sort_stack_of_2(a);
-	else if (size <= 3)
-		sort_stack_of_3(a);
+	print_stack(a);
+	print_stack(b);
+	move_count_first = 0;
+	size = stack_size(a);
+	move_count_second = 0;
+	//Scan stack_a from the top to confirm if one of the numbers from Chunk1 exist in the stack and stores his value in hold_fist variable
+	//Also count the amout of movements necessary to bring the value to the top of the stack
+	current = *a;
+	while (current)
+	{
+		if (current->value > 0 && current->value < 20)
+		{
+			hold_first = current->value;
+			break ;
+		}
+		move_count_first++;
+		current = current->next;
+	}
+	//Scan stack_a from the bottom and see if a different number from Chunk1 exist in the stack and stores his value in hold_second variable
+	//Also count the amout of movements necessary to bring the value to the top of the stack
+	current = *a;
+	while (current)
+	{
+		if (current->value > 0 && current->value < 20)
+		{
+			hold_second = current->value;
+			hold_sec_pos = move_count_second;
+		}
+		move_count_second++;
+		current = current->next;
+	}
+	move_count_second = size - hold_sec_pos;
+	//Compare how many moves it would take to get the values to the top and decides wich choice is the best
+	if (move_count_first > move_count_second)
+	{
+		current_value = hold_second;
+		rra_for_(a, move_count_second);
+	}
 	else
-	{	
-	pivot = find_pivot(a, size);
-	partition(a, b, pivot);
-	sort_stack(a, b);
-	sort_stack(b, a);
+	{
+		current_value = hold_first;
+		ra_for_(a, move_count_first);
+	}
+	while (!*b || !(*b)->next)
+		pb(a, b);
+	//Check if the number that we are pushing is either bigger or smaller than all the other numbers in stack_b
+	current = *b;
+	while (current)
+	{
+		current = current->next;
 	}
 }
 
+int	pop(t_stack **stack)
+{
+	int		val;
+	t_stack	*tmp;
+
+	if (!(*stack))
+		return (-1);
+	val = (*stack)->value;
+	tmp = *stack;
+	*stack = (*stack)->next;
+	free(tmp);
+	return (val);
+}
+
+void	insertion_sort(t_stack **a, t_stack **b)
+{
+	int	i;
+	int	smallest;
+	int	largest;
+	int	size;
+
+	size = stack_size(a);
+	i = 0;
+	while (stack_size(a) > 0 && i <= size)
+	{
+		if (i == 0)
+		{
+			smallest = (*a)->value;
+			while (stack_size(a) > 0)
+			{
+				if ((*a)->value < smallest)
+					smallest = (*a)->value;
+				pb(a, b);
+				if (stack_size(b) > 1 && (*b)->value > (*b)->next->value)
+					sb(b);
+			}
+			while (stack_size(b) > 0 && (*b)->value != smallest)
+			{
+				if ((*b)->value < smallest)
+					ra(a);
+				else if ((*b)->value != smallest && stack_size(b) > 1)
+					rb(b);
+				else
+					pa(a, b);
+			}
+		}
+		print_stack(a);
+		print_stack(b);
+		pa(a, b);
+		i++;
+	}
+	largest = (*b)->value;
+	while (i > 0)
+	{
+		while ((*b)->value != largest)
+		{
+			if (stack_size(b) == 1 || (*b)->next->value == largest)
+				rb(b);
+			else if ((*b)->value > (*b)->next->value)
+				sb(b);
+			else
+				ra(a);
+		}
+		pa(a, b);
+		largest = (*b)->value;
+		i--;
+	}
+}
+
+void	rra_for_(t_stack **a, int move_count)
+{
+	while (move_count > 0)
+	{
+		rra(a);
+		move_count--;
+	}
+}
+
+void	ra_for_(t_stack **a, int move_count)
+{
+	while (move_count > 0)
+	{
+		ra(a);
+		move_count--;
+	}
+}
