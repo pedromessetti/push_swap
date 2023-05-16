@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/16 10:12:42 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:47:10 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@ int	stack_is_sorted(t_stack **stack)
 		current = current->next;
 	}
 	// write(1, "Stack already sorted\n", 21);
-	return (1);
-}
-
-int	is_sorted(t_stack *stack)
-{
-	while (stack && stack->next)
-	{
-		if (stack->value > stack->next->value)
-			return (0);
-		stack = stack->next;
-	}
 	return (1);
 }
 
@@ -79,6 +68,8 @@ void	define_sort(t_stack **a, t_stack **b)
 		return ;
 	if (stack_size(a) == 3)
 		sort_stack_of_3(a);
+	if (stack_size(a) == 5)
+		sort_stack_of_5(a, b, 0);
 	else
 		sort_stack(a, b);
 }
@@ -103,14 +94,16 @@ int	find_min_value(t_stack **stack)
 }
 
 // Finds the maximum value in the stack
-int	find_max_value(t_stack **stack)
+int	find_max_value(t_stack **stack, int size)
 {
 	int		max_val;
+	int		i;
 	t_stack	*current;
 
+	i = -1;
 	max_val = INT_MIN;
 	current = *stack;
-	while (current != NULL)
+	while (current && ++i < size)
 	{
 		if (current->value > max_val)
 		{
@@ -168,155 +161,138 @@ void	sort_stack_of_3(t_stack **a)
 	}
 }
 
-void	sort_stack(t_stack **a, t_stack **b)
+void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 {
-	int		hold_first;
-	int		hold_second;
-	int		move_count_first;
-	int		move_count_second;
-	int		hold_sec_pos;
-	t_stack	*current;
-	int		size;
-	int		current_value;
-
-	if (!*a)
-		return ;
-	print_stack(a);
-	print_stack(b);
-	move_count_first = 0;
-	size = stack_size(a);
-	move_count_second = 0;
-	//Scan stack_a from the top to confirm if one of the numbers from Chunk1 exist in the stack and stores his value in hold_fist variable
-	//Also count the amout of movements necessary to bring the value to the top of the stack
-	current = *a;
-	while (current)
-	{
-		if (current->value > 0 && current->value < 20)
-		{
-			hold_first = current->value;
-			break ;
-		}
-		move_count_first++;
-		current = current->next;
-	}
-	//Scan stack_a from the bottom and see if a different number from Chunk1 exist in the stack and stores his value in hold_second variable
-	//Also count the amout of movements necessary to bring the value to the top of the stack
-	current = *a;
-	while (current)
-	{
-		if (current->value > 0 && current->value < 20)
-		{
-			hold_second = current->value;
-			hold_sec_pos = move_count_second;
-		}
-		move_count_second++;
-		current = current->next;
-	}
-	move_count_second = size - hold_sec_pos;
-	//Compare how many moves it would take to get the values to the top and decides wich choice is the best
-	if (move_count_first > move_count_second)
-	{
-		current_value = hold_second;
-		rra_for_(a, move_count_second);
-	}
-	else
-	{
-		current_value = hold_first;
-		ra_for_(a, move_count_first);
-	}
-	while (!*b || !(*b)->next)
+	while (stack_size(a) > 3)
 		pb(a, b);
-	//Check if the number that we are pushing is either bigger or smaller than all the other numbers in stack_b
-	current = *b;
-	while (current)
+	sort_stack_of_3(a);
+	if (option)
 	{
-		current = current->next;
+		resort_stack_of_5_option(a, b);
+		return ;
 	}
+	resort_stack_of_5(a, b);
 }
 
-int	pop(t_stack **stack)
+void	resort_stack_of_5(t_stack **a, t_stack **b)
 {
-	int		val;
+	int		b_curr_val;
 	t_stack	*tmp;
+	double	size;
+	int		count_largest;
+	int		r_count;
 
-	if (!(*stack))
-		return (-1);
-	val = (*stack)->value;
-	tmp = *stack;
-	*stack = (*stack)->next;
-	free(tmp);
-	return (val);
-}
-
-void	insertion_sort(t_stack **a, t_stack **b)
-{
-	int	i;
-	int	smallest;
-	int	largest;
-	int	size;
-
-	size = stack_size(a);
-	i = 0;
-	while (stack_size(a) > 0 && i <= size)
+	while (*b)
 	{
-		if (i == 0)
+		size = stack_size(a);
+		b_curr_val = (*b)->value;
+		tmp = *a;
+		while (tmp && tmp->value < b_curr_val)
+			tmp = tmp->next;
+		count_largest = stack_size(&tmp);
+		if (count_largest > size / 2)
+			r_count = size - count_largest;
+		else
+			r_count = count_largest;
+		while (r_count)
 		{
-			smallest = (*a)->value;
-			while (stack_size(a) > 0)
-			{
-				if ((*a)->value < smallest)
-					smallest = (*a)->value;
-				pb(a, b);
-				if (stack_size(b) > 1 && (*b)->value > (*b)->next->value)
-					sb(b);
-			}
-			while (stack_size(b) > 0 && (*b)->value != smallest)
-			{
-				if ((*b)->value < smallest)
-					ra(a);
-				else if ((*b)->value != smallest && stack_size(b) > 1)
-					rb(b);
-				else
-					pa(a, b);
-			}
+			if (size - count_largest <= size / 2)
+				ra(a);
+			else
+				rra(a);
+			r_count--;
 		}
-		print_stack(a);
-		print_stack(b);
 		pa(a, b);
-		i++;
-	}
-	largest = (*b)->value;
-	while (i > 0)
-	{
-		while ((*b)->value != largest)
+		if (count_largest >= size / 2)
+			r_count = size - count_largest;
+		else
+			r_count = count_largest + 1;
+		while (r_count)
 		{
-			if (stack_size(b) == 1 || (*b)->next->value == largest)
-				rb(b);
-			else if ((*b)->value > (*b)->next->value)
-				sb(b);
+			if (size - count_largest <= size / 2)
+				rra(a);
 			else
 				ra(a);
+			r_count--;
+		}
+	}
+}
+
+void	sort_stack(t_stack **a, t_stack **b)
+{
+	int	size;
+	int	sum;
+	int	med;
+
+	while (stack_size(a) > 5)
+	{
+
+		size = stack_size(a);
+		sum = sum_val(a);
+		med = sum / size;
+		if ((*a)->value < med)
+			pb(a, b);
+		else
+			ra(a);
+	}
+	sort_stack_of_5(a, b, 1);
+}
+
+int	sum_val(t_stack **a)
+{
+	t_stack	*curr;
+	int		sum;
+
+	curr = *a;
+	sum = 0;
+	while (curr)
+	{
+		sum += curr->value;
+		curr = curr->next;
+	}
+	return (sum);
+}
+
+void	resort_stack_of_5_option(t_stack **a, t_stack **b)
+{
+	int b_curr_val;
+	t_stack *tmp;
+	double size;
+	int count_largest;
+	int r_count;
+	int i = 3;
+	while (--i > 0)
+	{
+		size = stack_size(a);
+		b_curr_val = (*b)->value;
+		tmp = *a;
+		while (tmp && tmp->value < b_curr_val)
+			tmp = tmp->next;
+		count_largest = stack_size(&tmp);
+		if (count_largest > size / 2)
+			r_count = size - count_largest;
+		else
+			r_count = count_largest;
+		while (r_count)
+		{
+			if (size - count_largest <= size / 2)
+				ra(a);
+			else
+				rra(a);
+			r_count--;
 		}
 		pa(a, b);
-		largest = (*b)->value;
-		i--;
-	}
-}
-
-void	rra_for_(t_stack **a, int move_count)
-{
-	while (move_count > 0)
-	{
-		rra(a);
-		move_count--;
-	}
-}
-
-void	ra_for_(t_stack **a, int move_count)
-{
-	while (move_count > 0)
-	{
-		ra(a);
-		move_count--;
+		if (count_largest >= size / 2)
+			r_count = size - count_largest;
+		else
+			r_count = count_largest + 1;
+		while (r_count)
+		{
+			if (size - count_largest <= size / 2)
+				rra(a);
+			else
+				ra(a);
+			r_count--;
+		}
 	}
 }
