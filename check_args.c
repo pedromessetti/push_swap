@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/11 16:26:10 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/17 23:45:21 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	check_and_push(char **av, t_stack **a)
 			exit(1);
 		}
 		if(!*a)
-			*a = add_node(tmp);
+			*a = add_number_to_stack(tmp);
 		else
-			add_tail(a, add_node(tmp));
+			add_tail_to_stack(a, add_number_to_stack(tmp));
 	}
 }

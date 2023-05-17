@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/17 16:21:02 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/17 23:44:54 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
+//# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -31,6 +32,7 @@ typedef struct du_cost
 	int				bf;
 	int				val;
 	int				cost;
+	struct du_cost	*next;
 }					du_cost;
 
 /* --- General functions --- */
@@ -40,6 +42,8 @@ long				ft_atoi(const char *nptr);
 int					is_digit(char c);
 int					is_numeric(char *s);
 int					check_for_dup(long tmp, char **av, int i);
+void				*ft_calloc(size_t nmemb, size_t size);
+void				*ft_memset(void *s, int c, size_t n);
 
 /* --- Operation functions --- */
 
@@ -64,10 +68,17 @@ int					stack_size(t_stack **stack);
 void				free_stacks(t_stack **stack);
 void				print_stack(t_stack **stack);
 t_stack				*init_stack(void);
-t_stack				*add_node(int value);
-t_stack				*find_last(t_stack *stack);
-void				add_tail(t_stack **stack_head, t_stack *new_node);
+t_stack				*add_number_to_stack(int value);
+t_stack				*find_last_stack(t_stack *stack);
+void				add_tail_to_stack(t_stack **stack_head, t_stack *new_node);
 int					find_pos_on_stack(t_stack **stack, int value_to_find);
+
+/* Cost Functions */
+
+du_cost				*add_cost(int val, int bf, int cost);
+void				add_tail_to_cost_table(du_cost **stack_head,
+						du_cost *new_node);
+du_cost				*find_last_cost(du_cost *cost_table);
 
 /* --- Sort Functions --- */
 
@@ -79,14 +90,15 @@ void				define_sort(t_stack **a, t_stack **b);
 void				sort_stack_of_2(t_stack **a);
 void				sort_stack_of_3(t_stack **a);
 void				sort_stack_of_5(t_stack **a, t_stack **b, int option);
-void				resort_stack_of_5(t_stack **a, t_stack **b);
-void				resort_stack_of_5_option(t_stack **a, t_stack **b);
+void				sort_stack_of_5__aux(t_stack **a, t_stack **b);
+void				sort_stack_of_5__aux_option(t_stack **a, t_stack **b);
+void				sort_stack_of_100(t_stack **a, t_stack **b);
 
 /* --- Check functions --- */
 
 void				check_and_push(char **av, t_stack **a);
 
-/* Fodase functions */
+/* X functions */
 
 int					sum_val(t_stack **a);
 int					find_max_value(t_stack **stack, int size);
@@ -94,4 +106,6 @@ int					find_bf(t_stack **a, int value);
 int					calc_cost(int num, int bf, t_stack **a, t_stack **b);
 void				move_bf_to_top(int val, t_stack **a);
 void				move_num_to_top(int val, t_stack **b);
+void				auxiliar_1(t_stack **a, t_stack **b);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/17 16:58:26 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/18 00:09:51 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	define_sort(t_stack **a, t_stack **b)
 	if (stack_size(a) == 5)
 		sort_stack_of_5(a, b, 0);
 	else
-		sort_stack(a, b);
+		sort_stack_of_100(a, b);
 }
 
 // Finds the minimum value in the stack
@@ -161,6 +161,7 @@ void	sort_stack_of_3(t_stack **a)
 	}
 }
 
+/*Main unction to sort a stack of 5 numbers*/
 void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 {
 	while (stack_size(a) > 3)
@@ -168,13 +169,15 @@ void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 	sort_stack_of_3(a);
 	if (option)
 	{
-		resort_stack_of_5_option(a, b);
+		sort_stack_of_5__aux_option(a, b);
 		return ;
 	}
-	resort_stack_of_5(a, b);
+	sort_stack_of_5__aux(a, b);
 }
 
-void	resort_stack_of_5(t_stack **a, t_stack **b)
+/*Auxiliar function to sort the stack of 5 elements 
+(stack_a must be already in ascending order)*/
+void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 {
 	int		b_curr_val;
 	t_stack	*tmp;
@@ -218,51 +221,59 @@ void	resort_stack_of_5(t_stack **a, t_stack **b)
 	}
 }
 
-void	sort_stack(t_stack **a, t_stack **b)
+/*Main function to sort a stack of until 100 numbers*/
+void	sort_stack_of_100(t_stack **a, t_stack **b)
 {
-	int		size;
-	int		sum;
-	int		med;
+	int		initial_size_a;
 	t_stack	*tmp_b;
 	int		best_cost;
 	int		best_cost_index;
-	du_cost	cost[5];
+	du_cost	*cost;
+	int		bf;
+	int		val;
+	int		val_cost;
+	du_cost	*curr;
+	int		j;
 
-	while (stack_size(a) > 5)
-	{
-		size = stack_size(a);
-		sum = sum_val(a);
-		med = sum / size;
-		if ((*a)->value < med)
-			pb(a, b);
-		else
-			ra(a);
-	}
+	cost = NULL;
+	initial_size_a = stack_size(a);
+	auxiliar_1(a, b);
 	sort_stack_of_5(a, b, 1);
 	tmp_b = *b;
 	for (int i = 0; i < 5; i++)
 	{
-		cost[i].bf = find_bf(a, tmp_b->value);
-		cost[i].val = tmp_b->value;
-		cost[i].cost = calc_cost(cost[i].val, cost[i].bf, a, b);
+		bf = find_bf(a, tmp_b->value);
+		val = tmp_b->value;
+		val_cost = calc_cost(cost->val, cost->bf, a, b);
+		if (!cost)
+			cost = add_cost(val, bf, val_cost);
+		else
+			add_tail_to_cost_table(&cost, add_cost(val, bf, val_cost));
 		tmp_b = tmp_b->next;
 	}
-	best_cost = cost[0].cost;
-	best_cost_index = 0;
-	for (int i = 0; i < 5; i++)
+	curr = cost;
+	best_cost = curr->cost;
+	best_cost_index = j;
+	while (curr)
 	{
-		if (cost[i].cost < best_cost)
+		if (curr->cost < best_cost)
 		{
-			best_cost_index = i;
-			best_cost = cost[i].cost;
+			best_cost_index = j;
+			best_cost = curr->cost;
 		}
+		curr = curr->next;
 	}
-	move_bf_to_top(cost[best_cost_index].bf, a);
-	move_num_to_top(cost[best_cost_index].val, b);
+	curr = cost;
+	while (j > 0)
+		curr = curr->next;
+	move_bf_to_top(curr->bf, a);
+	move_num_to_top(curr->val, b);
 	pa(a, b);
-	sort_stack(a, b);
+	//sort_stack_of_100(a, b);
 }
 
+/*Calculates the best movement  
+int		val = Better cost of the best frind of the number*/
 void	move_bf_to_top(int val, t_stack **a)
 {
 	int	posix;
@@ -363,7 +374,7 @@ int	sum_val(t_stack **a)
 	return (sum);
 }
 
-void	resort_stack_of_5_option(t_stack **a, t_stack **b)
+void	sort_stack_of_5__aux_option(t_stack **a, t_stack **b)
 {
 	int b_curr_val;
 	t_stack *tmp;
@@ -373,6 +384,7 @@ void	resort_stack_of_5_option(t_stack **a, t_stack **b)
 	int i = 3;
 	while (--i > 0)
 	{
+		printf("HERE");
 		size = stack_size(a);
 		b_curr_val = (*b)->value;
 		tmp = *a;
