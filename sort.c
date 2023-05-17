@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/16 14:47:10 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:58:26 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,16 @@ void	resort_stack_of_5(t_stack **a, t_stack **b)
 
 void	sort_stack(t_stack **a, t_stack **b)
 {
-	int	size;
-	int	sum;
-	int	med;
+	int		size;
+	int		sum;
+	int		med;
+	t_stack	*tmp_b;
+	int		best_cost;
+	int		best_cost_index;
+	du_cost	cost[5];
 
 	while (stack_size(a) > 5)
 	{
-
 		size = stack_size(a);
 		sum = sum_val(a);
 		med = sum / size;
@@ -236,6 +239,113 @@ void	sort_stack(t_stack **a, t_stack **b)
 			ra(a);
 	}
 	sort_stack_of_5(a, b, 1);
+	tmp_b = *b;
+	for (int i = 0; i < 5; i++)
+	{
+		cost[i].bf = find_bf(a, tmp_b->value);
+		cost[i].val = tmp_b->value;
+		cost[i].cost = calc_cost(cost[i].val, cost[i].bf, a, b);
+		tmp_b = tmp_b->next;
+	}
+	best_cost = cost[0].cost;
+	best_cost_index = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		if (cost[i].cost < best_cost)
+		{
+			best_cost_index = i;
+			best_cost = cost[i].cost;
+		}
+	}
+	move_bf_to_top(cost[best_cost_index].bf, a);
+	move_num_to_top(cost[best_cost_index].val, b);
+	pa(a, b);
+	sort_stack(a, b);
+}
+
+void	move_bf_to_top(int val, t_stack **a)
+{
+	int	posix;
+
+	posix = find_pos_on_stack(a, val);
+	if (posix > stack_size(a) / 2)
+	{
+		posix -= 5;
+		posix *= -1;
+		while (posix > 0)
+		{
+			rra(a);
+			posix--;
+		}
+	}
+	else
+	{
+		while (posix > 0)
+		{
+			ra(a);
+			posix--;
+		}
+	}
+}
+
+void	move_num_to_top(int val, t_stack **b)
+{
+	int	posix;
+
+	posix = find_pos_on_stack(b, val);
+	if (posix > stack_size(b) / 2)
+	{
+		posix -= 5;
+		posix *= -1;
+		while (posix > 0)
+		{
+			rrb(b);
+			posix--;
+		}
+	}
+	else
+	{
+		while (posix > 0)
+		{
+			rb(b);
+			posix--;
+		}
+	}
+}
+
+int	find_bf(t_stack **a, int value)
+{
+	int		bf;
+	t_stack	*tmp_a;
+
+	tmp_a = *a;
+	while (tmp_a->value < value)
+		tmp_a = tmp_a->next;
+	bf = tmp_a->value;
+	return (bf);
+}
+
+int	calc_cost(int num, int bf, t_stack **a, t_stack **b)
+{
+	int	cost;
+	int	moves_to_put_num_on_top;
+	int	moves_to_put_bf_on_top;
+
+	cost = 0;
+	moves_to_put_num_on_top = find_pos_on_stack(b, num);
+	moves_to_put_bf_on_top = find_pos_on_stack(a, bf);
+	if (moves_to_put_num_on_top > stack_size(b) / 2)
+	{
+		moves_to_put_num_on_top -= 5;
+		moves_to_put_num_on_top *= -1;
+	}
+	if (moves_to_put_bf_on_top > stack_size(a) / 2)
+	{
+		moves_to_put_bf_on_top -= 5;
+		moves_to_put_bf_on_top *= -1;
+	}
+	cost = moves_to_put_bf_on_top + moves_to_put_num_on_top;
+	return (cost);
 }
 
 int	sum_val(t_stack **a)

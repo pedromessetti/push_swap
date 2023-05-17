@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/16 14:43:04 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:21:02 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ typedef struct s_stack
 	int				value;
 	struct s_stack	*next;
 }					t_stack;
+
+typedef struct du_cost
+{
+	int				bf;
+	int				val;
+	int				cost;
+}					du_cost;
 
 /* --- General functions --- */
 
@@ -80,7 +87,11 @@ void				resort_stack_of_5_option(t_stack **a, t_stack **b);
 void				check_and_push(char **av, t_stack **a);
 
 /* Fodase functions */
+
 int					sum_val(t_stack **a);
 int					find_max_value(t_stack **stack, int size);
-
+int					find_bf(t_stack **a, int value);
+int					calc_cost(int num, int bf, t_stack **a, t_stack **b);
+void				move_bf_to_top(int val, t_stack **a);
+void				move_num_to_top(int val, t_stack **b);
 #endif
