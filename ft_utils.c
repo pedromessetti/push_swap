@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/17 22:56:17 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/18 19:39:43 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,31 @@ long	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-/*Allocate NMEMB elements of SIZE bytes each, all initialized to 0.*/
-void	*ft_calloc(size_t nmemb, size_t size)
+/* Check if there is a numeric character in the string pointed by s
+   Return 1 if the string is a numeric char
+   Return 0 if find something else */
+int	is_numeric(char *s)
 {
-	void	*alloc_space;
-
-	alloc_space = (void *)malloc(nmemb * size);
-	if (!alloc_space)
-		return (NULL);
-	ft_memset(alloc_space, 0, (nmemb * size));
-	return (alloc_space);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	unsigned char	*p;
-	size_t			i;
+	int	i;
 
 	i = 0;
-	p = (unsigned char *)s;
-	while (i < n)
+	if (s[0] == 45 && is_digit(s[1]))
+		i++;
+	while (s[i])
 	{
-		p[i] = c;
+		if (!is_digit(s[i]))
+			return (0);
 		i++;
 	}
-	return (p);
+	return (1);
+}
+
+/* Check if the char is a numeric character
+   Return 1 if is a numeric char
+   Return 0 if is something else */
+int	is_digit(char c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
 }
