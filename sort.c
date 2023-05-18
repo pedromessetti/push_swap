@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/18 00:09:51 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/18 13:34:23 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	sort_stack_of_3(t_stack **a)
 	}
 }
 
-/*Main unction to sort a stack of 5 numbers*/
+/*Main function to sort a stack of 5 numbers*/
 void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 {
 	while (stack_size(a) > 3)
@@ -224,7 +224,6 @@ void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 /*Main function to sort a stack of until 100 numbers*/
 void	sort_stack_of_100(t_stack **a, t_stack **b)
 {
-	int		initial_size_a;
 	t_stack	*tmp_b;
 	int		best_cost;
 	int		best_cost_index;
@@ -235,41 +234,52 @@ void	sort_stack_of_100(t_stack **a, t_stack **b)
 	du_cost	*curr;
 	int		j;
 
-	cost = NULL;
-	initial_size_a = stack_size(a);
 	auxiliar_1(a, b);
 	sort_stack_of_5(a, b, 1);
-	tmp_b = *b;
-	for (int i = 0; i < 5; i++)
+	while (stack_size(b) > 0)
 	{
-		bf = find_bf(a, tmp_b->value);
-		val = tmp_b->value;
-		val_cost = calc_cost(cost->val, cost->bf, a, b);
-		if (!cost)
-			cost = add_cost(val, bf, val_cost);
-		else
-			add_tail_to_cost_table(&cost, add_cost(val, bf, val_cost));
-		tmp_b = tmp_b->next;
-	}
-	curr = cost;
-	best_cost = curr->cost;
-	best_cost_index = j;
-	while (curr)
-	{
-		if (curr->cost < best_cost)
+		cost = NULL;
+		tmp_b = *b;
+		while (tmp_b)
 		{
-			best_cost_index = j;
-			best_cost = curr->cost;
+			val = tmp_b->value;
+			bf = find_bf(a, val);
+			val_cost = calc_cost(val, bf, a, b);
+			if (!cost)
+				cost = add_cost(val, bf, val_cost);
+			else
+				add_tail_to_cost_table(&cost, add_cost(val, bf, val_cost));
+			tmp_b = tmp_b->next;
 		}
-		curr = curr->next;
+		curr = cost;
+		best_cost = curr->cost;
+		j = 0;
+		best_cost_index = 0;
+		while (curr)
+		{
+			if (curr->cost < best_cost)
+			{
+				best_cost_index = j;
+				best_cost = curr->cost;
+				j++;
+			}
+			else
+				j++;
+			curr = curr->next;
+		}
+		curr = cost;
+		while (curr && best_cost_index > 0)
+		{
+			best_cost_index--;
+			curr = curr->next;
+		}
+		move_bf_to_top(curr->bf, a);
+		move_num_to_top(curr->val, b);
+		free_cost_tab(&cost);
+		pa(a, b);
 	}
-	curr = cost;
-	while (j > 0)
-		curr = curr->next;
-	move_bf_to_top(curr->bf, a);
-	move_num_to_top(curr->val, b);
-	pa(a, b);
-	//sort_stack_of_100(a, b);
+	while (find_largest(a) != stack_size(a)-1)
+		ra(a);
 }
 
 /*Calculates the best movement  
@@ -281,7 +291,7 @@ void	move_bf_to_top(int val, t_stack **a)
 	posix = find_pos_on_stack(a, val);
 	if (posix > stack_size(a) / 2)
 	{
-		posix -= 5;
+		posix -= stack_size(a);
 		posix *= -1;
 		while (posix > 0)
 		{
@@ -306,7 +316,7 @@ void	move_num_to_top(int val, t_stack **b)
 	posix = find_pos_on_stack(b, val);
 	if (posix > stack_size(b) / 2)
 	{
-		posix -= 5;
+		posix -= stack_size(b);
 		posix *= -1;
 		while (posix > 0)
 		{
@@ -327,12 +337,25 @@ void	move_num_to_top(int val, t_stack **b)
 int	find_bf(t_stack **a, int value)
 {
 	int		bf;
+	int		res;
+	int		counter;
 	t_stack	*tmp_a;
 
 	tmp_a = *a;
-	while (tmp_a->value < value)
+	counter = INT_MAX;
+	bf = INT_MAX;
+	while (tmp_a)
+	{
+		res = tmp_a->value - value;
+		if ((res < counter) && (tmp_a->value > value))
+		{
+			counter = res;
+			bf = tmp_a->value;
+		}
 		tmp_a = tmp_a->next;
-	bf = tmp_a->value;
+	}
+	if (bf == INT_MAX)
+		return (-1);
 	return (bf);
 }
 
@@ -343,16 +366,16 @@ int	calc_cost(int num, int bf, t_stack **a, t_stack **b)
 	int	moves_to_put_bf_on_top;
 
 	cost = 0;
-	moves_to_put_num_on_top = find_pos_on_stack(b, num);
-	moves_to_put_bf_on_top = find_pos_on_stack(a, bf);
+	moves_to_put_num_on_top = find_pos_on_stack(b, num); //0
+	moves_to_put_bf_on_top = find_pos_on_stack(a, bf); //4
 	if (moves_to_put_num_on_top > stack_size(b) / 2)
 	{
-		moves_to_put_num_on_top -= 5;
+		moves_to_put_num_on_top -= stack_size(b);
 		moves_to_put_num_on_top *= -1;
 	}
 	if (moves_to_put_bf_on_top > stack_size(a) / 2)
 	{
-		moves_to_put_bf_on_top -= 5;
+		moves_to_put_bf_on_top -= stack_size(a);
 		moves_to_put_bf_on_top *= -1;
 	}
 	cost = moves_to_put_bf_on_top + moves_to_put_num_on_top;
@@ -384,7 +407,6 @@ void	sort_stack_of_5__aux_option(t_stack **a, t_stack **b)
 	int i = 3;
 	while (--i > 0)
 	{
-		printf("HERE");
 		size = stack_size(a);
 		b_curr_val = (*b)->value;
 		tmp = *a;

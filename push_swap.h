@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/17 23:44:54 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/18 13:24:29 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
-//# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -76,10 +75,11 @@ int					find_pos_on_stack(t_stack **stack, int value_to_find);
 /* Cost Functions */
 
 du_cost				*add_cost(int val, int bf, int cost);
-void				add_tail_to_cost_table(du_cost **stack_head,
-						du_cost *new_node);
+void	add_tail_to_cost_table(du_cost **stack_head,
+							du_cost *new_node);
 du_cost				*find_last_cost(du_cost *cost_table);
-
+void				print_cost(du_cost **cost_tab);
+void				free_cost_tab(du_cost **cost_tab);
 /* --- Sort Functions --- */
 
 int					stack_is_sorted(t_stack **stack);

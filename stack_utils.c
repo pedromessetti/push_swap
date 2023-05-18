@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/17 23:46:36 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/18 11:08:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,26 @@
 /* Function that iterates into the stack and prints each value */
 void	print_stack(t_stack **stack)
 {
-	t_stack	*current;
+	t_stack	*curr;
 
-	current = *stack;
-	while (current)
+	curr = *stack;
+	while (curr)
 	{
-		printf("%d ", current->value);
-		current = current->next;
+		printf("%d ", curr->value);
+		curr = curr->next;
+	}
+	printf("\n");
+}
+
+void	print_cost(du_cost **cost_tab)
+{
+	du_cost	*curr;
+
+	curr = *cost_tab;
+	while (curr)
+	{
+		printf("Value: %d\nBest Friend: %d\nCost: %d\n", curr->val, curr->bf, curr->cost);
+		curr = curr->next;
 	}
 	printf("\n");
 }
@@ -57,6 +70,24 @@ void	free_stacks(t_stack **stack)
 		(*stack)->value = 0;
 		free(*stack);
 		(*stack) = tmp;
+	}
+}
+
+/* Free the allocated memory for the cost table */
+void	free_cost_tab(du_cost **cost_tab)
+{
+	du_cost	*tmp;
+
+	if (!cost_tab)
+		return ;
+	while (*cost_tab)
+	{
+		tmp = (*cost_tab)->next;
+		(*cost_tab)->val = 0;
+		(*cost_tab)->bf = 0;
+		(*cost_tab)->cost = 0;
+		free(*cost_tab);
+		(*cost_tab) = tmp;
 	}
 }
 
@@ -121,7 +152,7 @@ t_stack	*add_number_to_stack(int value)
 	return (new_node);
 }
 
-du_cost	*add_cost(int val, int bf, int cost)
+du_cost	*add_cost(int val, int bf, int val_cost)
 {
 	du_cost	*new_node;
 
@@ -130,10 +161,11 @@ du_cost	*add_cost(int val, int bf, int cost)
 		return (NULL);
 	new_node->val = val;
 	new_node->bf = bf;
-	new_node->cost = bf;
+	new_node->cost = val_cost;
 	new_node->next = NULL;
 	return (new_node);
 }
+
 int	find_pos_on_stack(t_stack **stack, int value_to_find)
 {
 	t_stack	*curr;
@@ -156,7 +188,6 @@ int	find_pos_on_stack(t_stack **stack, int value_to_find)
 void	auxiliar_1(t_stack **a, t_stack **b)
 {
 	int size_a = 0;
-	;
 	int sum = 0;
 	int med = 0;
 	while (stack_size(a) > 5)
