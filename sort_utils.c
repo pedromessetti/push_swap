@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   small_sort_utils.c                                 :+:      :+:    :+:   */
+/*   sort_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:53:57 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/18 20:31:11 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 05:54:49 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,29 @@ int	find_largest(t_stack **stack)
 		curr_pos++;
 	}
 	return (max_pos);
+}
+
+void	exec_rotate(t_stack **a, int rotate_count, int size, int count_largest,
+		int option)
+{
+	if (!*a)
+		return ;
+	while (rotate_count)
+	{
+		if (option)
+		{
+			if (size - count_largest <= size / 2)
+				rra(a);
+			else
+				ra(a);
+		}
+		else
+		{
+			if (size - count_largest <= size / 2)
+				ra(a);
+			else
+				rra(a);
+		}
+		rotate_count--;
+	}
 }

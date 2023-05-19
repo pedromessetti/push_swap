@@ -6,30 +6,11 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/18 20:57:09 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 05:16:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*Calculates the medium value between all numbers from stack A
-	if the number are bellow the medium value, pb(), if is above ra().*/
-void	auxiliar_1(t_stack **a, t_stack **b)
-{
-	int size_a = 0;
-	int sum = 0;
-	int med = 0;
-	while (stack_size(a) > 5)
-	{
-		size_a = stack_size(a);
-		sum = sum_val(a);
-		med = sum / size_a;
-		if ((*a)->val < med)
-			pb(a, b);
-		else
-			ra(a);
-	}
-}
 
 /*Calculate and moves best friend to top of stack A*/
 void	move_bf_to_top(int val, t_stack **a)

@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/18 20:43:08 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 05:48:06 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ int					find_bf(t_stack **a, int val);
 int					calc_cost(int num, int bf, t_stack **a, t_stack **b);
 void				move_bf_to_top(int val, t_stack **a);
 void				move_num_to_top(int val, t_stack **b);
-void				auxiliar_1(t_stack **a, t_stack **b);
+void				exec_initial_moves(t_stack **a, t_stack **b);
+void				set_cost_table(t_stack **a, t_stack **b, cost_tab **table);
+int					get_best_cost_posix(cost_tab **table);
+void				exec_rotate(t_stack **a, int rotate_count, int size,
+						int count_largest, int option);
 
 #endif

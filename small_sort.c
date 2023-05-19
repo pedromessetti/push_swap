@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:10:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/18 21:00:30 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 05:54:22 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 	int		count_largest;
 	int		r_count;
 
+	if (!*b)
+		return ;
+
 	while (*b)
 	{
 		size = stack_size(a);
@@ -71,26 +74,12 @@ void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest;
-		while (r_count)
-		{
-			if (size - count_largest <= size / 2)
-				ra(a);
-			else
-				rra(a);
-			r_count--;
-		}
+		exec_rotate(a, r_count, size, count_largest, 0);
 		pa(a, b);
 		if (count_largest >= size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest + 1;
-		while (r_count)
-		{
-			if (size - count_largest <= size / 2)
-				rra(a);
-			else
-				ra(a);
-			r_count--;
-		}
+		exec_rotate(a, r_count, size, count_largest, 1);
 	}
 }
