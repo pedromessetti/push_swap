@@ -1,31 +1,48 @@
 .SILENT:
-NAME = push_swap.a
+# Color variables
+RED = \033[1;31m
+GREEN = \033[1;32m
+WHITE = \033[1;37m
+RESET = \033[0m
+
+NAME = push_swap
 
 CC = cc
 
-CME = ar -rcs
+CFLAGS = -Wall -Wextra -Werror -g -I inc
 
-FLAGS = -Wall -Wextra -Werror -g #fsanitize=address
-
-SRCS = $(*.c)
+SRCS =	operations/push.c operations/swap.c operations/rotate.c operations/rev_rotate.c \
+		utils/stack_utils.c utils/big_sort_utils.c utils/cost_utils.c utils/ft_utils.c utils/sort_utils.c utils/find_utils.c \
+		sort/big_sort_aux.c sort/big_sort.c sort/small_sort.c \
+		verifications.c \
+		main.c
 
 OBJS = $(SRCS:.c=.o)
 
-$(NAME):	$(OBJS)
-	$(CME) $(NAME) $(OBJS)
+CHAR = =-=
+NUM = 7
+REPEATED_CHARS = $(call repeat_char,$(shell seq $(NUM)))
 
 all:	$(NAME)
 
+$(NAME):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	echo "$(GREEN)$(REPEATED_CHARS)$(RESET)" 
+	echo "$(WHITE)     $(NAME)"| tr '[:lower:]' '[:upper:]'
+	echo "$(GREEN)$(REPEATED_CHARS)$(RESET)" 
+	echo "$(GREEN)SUCCESSFULLY COMPILED$(RESET)"
+
 clean:
-	rm -f *.o
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re:	fclean all
 
-compile: re
-	$(CC) $(FLAGS) *.c -o push_swap
+run: re
+	$(MAKE) clean
 
-run: compile
-	rm -f *.o $(NAME)
+define repeat_char
+$(strip $(if $(firstword $(1)), $(CHAR)$(call repeat_char,$(subst $(firstword $(1)),,$(1)))))
+endef

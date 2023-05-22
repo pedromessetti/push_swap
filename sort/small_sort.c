@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:10:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 05:54:22 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 16:30:00 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 	sort_stack_of_3(a);
 	if (option)
 	{
-		sort_stack_of_5__aux_option(a, b);
+		sort_stack_of_5__aux_option(a, b, 3);
 		return ;
 	}
 	sort_stack_of_5__aux(a, b);
@@ -53,33 +53,28 @@ void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
 (stack A must be already in ascending order)*/
 void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 {
-	int		b_curr_val;
 	t_stack	*tmp;
-	double	size;
+	int		size;
 	int		count_largest;
 	int		r_count;
-
-	if (!*b)
-		return ;
 
 	while (*b)
 	{
 		size = stack_size(a);
-		b_curr_val = (*b)->val;
 		tmp = *a;
-		while (tmp && tmp->val < b_curr_val)
+		while (tmp && tmp->val < (*b)->val)
 			tmp = tmp->next;
 		count_largest = stack_size(&tmp);
 		if (count_largest > size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest;
-		exec_rotate(a, r_count, size, count_largest, 0);
+		exec_rotate_2(a, r_count, size, count_largest);
 		pa(a, b);
 		if (count_largest >= size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest + 1;
-		exec_rotate(a, r_count, size, count_largest, 1);
+		exec_rotate_1(a, r_count, size, count_largest);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/18 19:39:43 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 15:52:42 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	is_numeric(char *s)
 	int	i;
 
 	i = 0;
+	if (s[0] == '\0')
+		return (0);
 	if (s[0] == 45 && is_digit(s[1]))
 		i++;
 	while (s[i])

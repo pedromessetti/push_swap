@@ -2,13 +2,15 @@
 PUSH_SWAP - 42 PROJECT
 </h1>
 
+
+
 ## Index
 
 - [Index](#index)
-- [Description](#description)
+- [Description :clipboard:](#description-clipboard)
 - [Operation :wrench:](#operation-wrench)
 
-## Description
+## Description :clipboard:
 <p>
 Optimized data sorting algorithm. The goal of this project is to sort in ascending order a stack with X amount of random different integers using a limited set of movement operations with the lowest possible count of movements.
 
@@ -18,9 +20,8 @@ All the functions used in this program are created by myself except for `write()
 ## Operation :wrench:
 
 <p>
-Displays on the standard output the smallest program, made of Push swap language instructions,
-that sorts the integers received as arguments.
-At the beginning stack A has all the unsorted numbers and stack B is empty. At the end of the program stack A has to be in ascending order and stack B empty. For sorting we are allowed to use only the following moves:
+The subject says that Im only allowed to use 2 stacks named A and B. At the beginning stack A has all the unsorted numbers and stack B is empty. Wen running the program displays on the standard output the smallest program, made of Push Swap language instructions, that sorts the integers received as arguments. At the end the stack A is sorted in ascending order and stack B is empty. For sorting we are allowed to use only the following moves:
+</p>
 
 | Movements              | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
@@ -36,4 +37,3 @@ At the beginning stack A has all the unsorted numbers and stack B is empty. At t
 | rrb (reverse rotate b) | shift down all elements of stack B by 1. The last element becomes the first one |
 | rrr                    | exec rra and rrb at the same time                                               |
 
-</p>

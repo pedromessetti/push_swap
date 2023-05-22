@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verifications.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/18 20:27:22 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 14:57:19 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	define_sort(t_stack **a, t_stack **b)
 {
 	if (!*a || !(*a)->next)
 		return ;
-	if (stack_size(a) == 2)
+	else if (stack_size(a) == 2)
 		sort_stack_of_2(a);
-	if (stack_size(a) == 3)
+	else if (stack_size(a) <= 3)
 		sort_stack_of_3(a);
-	if (stack_size(a) == 5)
+	else if (stack_size(a) <= 5)
 		sort_stack_of_5(a, b, 0);
 	else
 		sort_big_stack(a, b);

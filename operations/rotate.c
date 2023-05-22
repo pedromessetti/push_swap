@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:48:03 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/18 20:58:48 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 13:46:58 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	rotate(t_stack **stack)
 	last = *stack;
 	tmp = last->next;
 	while (last->next)
-		last= last->next;
+		last = last->next;
 	last->next = *stack;
 	*stack = tmp;
 	last->next->next = NULL;

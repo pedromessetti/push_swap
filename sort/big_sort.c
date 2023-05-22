@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 05:51:15 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 16:30:06 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void	sort_big_stack(t_stack **a, t_stack **b)
 {
 	int			best_cost_posix;
-	cost_tab	*table;
-	cost_tab	*curr;
+	t_cost_tab	*table;
+	t_cost_tab	*curr;
 
 	exec_initial_moves(a, b);
 	sort_stack_of_5(a, b, 1);
@@ -40,34 +40,30 @@ void	sort_big_stack(t_stack **a, t_stack **b)
 
 /*Auxiliar function to sort the stack of 5 different numbers 
 (stack A must be already in ascending order)*/
-void	sort_stack_of_5__aux_option(t_stack **a, t_stack **b)
+void	sort_stack_of_5__aux_option(t_stack **a, t_stack **b, int i)
 {
-	int		b_curr_val;
 	t_stack	*tmp;
-	int	size;
+	int		size;
 	int		count_largest;
 	int		r_count;
-	int		i;
 
-	i = 3;
 	while (--i > 0)
 	{
 		size = stack_size(a);
-		b_curr_val = (*b)->val;
 		tmp = *a;
-		while (tmp && tmp->val < b_curr_val)
+		while (tmp && tmp->val < (*b)->val)
 			tmp = tmp->next;
 		count_largest = stack_size(&tmp);
 		if (count_largest > size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest;
-		exec_rotate(a, r_count, size, count_largest, 0);
+		exec_rotate_2(a, r_count, size, count_largest);
 		pa(a, b);
 		if (count_largest >= size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest + 1;
-		exec_rotate(a, r_count, size, count_largest, 1);
+		exec_rotate_1(a, r_count, size, count_largest);
 	}
 }

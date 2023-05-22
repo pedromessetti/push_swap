@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:47:04 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/18 20:57:54 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 15:39:08 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* Take the first element at the top of stack A and put it at the top of stack B. */
+/* Take the first element at the top of stack A
+ and put it at the top of stack B. */
 void	pb(t_stack **a, t_stack **b)
 {
 	t_stack	*tmp;
@@ -26,7 +27,8 @@ void	pb(t_stack **a, t_stack **b)
 	write(1, "pb\n", 3);
 }
 
-/* Take the first element at the top of stack B and put it at the top of stack A. */
+/* Take the first element at the top of stack B
+ and put it at the top of stack A. */
 void	pa(t_stack **a, t_stack **b)
 {
 	t_stack	*tmp;

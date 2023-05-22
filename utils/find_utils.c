@@ -1,26 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_utils.c                                       :+:      :+:    :+:   */
+/*   find_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 19:53:57 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 05:54:49 by pedro            ###   ########.fr       */
+/*   Created: 2023/05/19 15:48:01 by pmessett          #+#    #+#             */
+/*   Updated: 2023/05/19 15:50:27 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*Finds the smallest value on the stack and returns his position related to the top*/
+/*Iterates into the stack and returns the last node*/
+t_stack	*find_last_stack(t_stack *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack->next)
+		stack = stack->next;
+	return (stack);
+}
+
+/*Iterates into the stack and returns the position of the value on the stack*/
+int	find_pos_on_stack(t_stack **stack, int val_to_find)
+{
+	t_stack	*curr;
+	int		posix;
+
+	curr = *stack;
+	posix = 0;
+	while (curr)
+	{
+		if (curr->val == val_to_find)
+			return (posix);
+		posix++;
+		curr = curr->next;
+	}
+	return (-1);
+}
+
+/*Finds the smallest value on the stack and
+ returns his position related to the top*/
 int	find_smallest(t_stack **stack)
 {
 	int		smallest;
-	int		count;
+	int		curr_posix;
 	t_stack	*curr;
 	t_stack	*tmp;
 
-	count = 0;
+	curr_posix = 0;
 	tmp = *stack;
 	smallest = (*stack)->val;
 	curr = *stack;
@@ -33,12 +62,13 @@ int	find_smallest(t_stack **stack)
 	while (tmp->val != smallest)
 	{
 		tmp = tmp->next;
-		count++;
+		curr_posix++;
 	}
-	return (count);
+	return (curr_posix);
 }
 
-// Finds the position of the maximum value in the stack
+/*Finds the largest value on the stack and
+ returns his position related to the top*/
 int	find_largest(t_stack **stack)
 {
 	int		largest;
@@ -61,29 +91,4 @@ int	find_largest(t_stack **stack)
 		curr_pos++;
 	}
 	return (max_pos);
-}
-
-void	exec_rotate(t_stack **a, int rotate_count, int size, int count_largest,
-		int option)
-{
-	if (!*a)
-		return ;
-	while (rotate_count)
-	{
-		if (option)
-		{
-			if (size - count_largest <= size / 2)
-				rra(a);
-			else
-				ra(a);
-		}
-		else
-		{
-			if (size - count_largest <= size / 2)
-				ra(a);
-			else
-				rra(a);
-		}
-		rotate_count--;
-	}
 }

@@ -6,13 +6,14 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:48:03 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 08:34:43 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/19 13:43:42 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* Main function to swap the first 2 elements at the top of the stack passes as parameter */
+/* Main function to swap the first 2 elements
+at the top of the stack passes as parameter */
 void	swap(t_stack **stack)
 {
 	t_stack	*tmp;
@@ -41,7 +42,8 @@ void	sb(t_stack **b)
 	write(1, "sb\n", 3);
 }
 
-/* Swap the first 2 elements at the top of the stack A and stack B at the same time */
+/* Swap the first 2 elements at the top of the
+ stack A and stack B at the same time */
 void	ss(t_stack **a, t_stack **b)
 {
 	sa(a);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   big_sort_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 05:16:01 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 15:52:16 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*Calculate and moves best friend to top of stack A*/
+/*Moves best friend to top of stack A*/
 void	move_bf_to_top(int val, t_stack **a)
 {
 	int	posix;
@@ -38,7 +38,7 @@ void	move_bf_to_top(int val, t_stack **a)
 	}
 }
 
-/*Calculate and moves number to top of stack A*/
+/*Moves number to top of stack B*/
 void	move_num_to_top(int val, t_stack **b)
 {
 	int	posix;
@@ -90,7 +90,8 @@ int	find_bf(t_stack **a, int val)
 	return (bf);
 }
 
-/*Calcutes and returns the sum of the amount of movements to put the number and his best friend on top of their stacks*/
+/*Calcutes and returns the sum of the amount of movements to
+ put the number and his best friend on top of their stacks*/
 int	calc_cost(int num, int bf, t_stack **a, t_stack **b)
 {
 	int	cost;
@@ -98,8 +99,8 @@ int	calc_cost(int num, int bf, t_stack **a, t_stack **b)
 	int	moves_to_put_bf_on_top;
 
 	cost = 0;
-	moves_to_put_num_on_top = find_pos_on_stack(b, num); //0
-	moves_to_put_bf_on_top = find_pos_on_stack(a, bf); //4
+	moves_to_put_num_on_top = find_pos_on_stack(b, num);
+	moves_to_put_bf_on_top = find_pos_on_stack(a, bf);
 	if (moves_to_put_num_on_top > stack_size(b) / 2)
 	{
 		moves_to_put_num_on_top -= stack_size(b);

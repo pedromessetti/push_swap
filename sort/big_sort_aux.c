@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_sort_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 05:15:25 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 05:40:26 by pedro            ###   ########.fr       */
+/*   Updated: 2023/05/19 15:56:56 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exec_initial_moves(t_stack **a, t_stack **b)
 }
 
 /*Auxiliar function to set the cost table*/
-void	set_cost_table(t_stack **a, t_stack **b, cost_tab **table)
+void	set_cost_table(t_stack **a, t_stack **b, t_cost_tab **table)
 {
 	int		bf;
 	int		val;
@@ -58,12 +58,12 @@ void	set_cost_table(t_stack **a, t_stack **b, cost_tab **table)
 }
 
 /*Calculate and returns the posix of the best cost on the cost table*/
-int	get_best_cost_posix(cost_tab **table)
+int	get_best_cost_posix(t_cost_tab **table)
 {
-	cost_tab *curr;
-	int best_cost_posix;
-	int best_cost_val;
-	int i;
+	t_cost_tab	*curr;
+	int			best_cost_posix;
+	int			best_cost_val;
+	int			i;
 
 	curr = *table;
 	best_cost_val = curr->cost;
