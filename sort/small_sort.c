@@ -69,12 +69,12 @@ void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest;
-		exec_rotate_2(a, r_count, size, count_largest);
+		exec_rotate_1(a, r_count, size, count_largest);
 		pa(a, b);
 		if (count_largest >= size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest + 1;
-		exec_rotate_1(a, r_count, size, count_largest);
+		exec_rotate_2(a, r_count, size, count_largest);
 	}
 }

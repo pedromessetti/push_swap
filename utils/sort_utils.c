@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	exec_rotate_1(t_stack **a, int rotate_count, int size,
+void	exec_rotate_2(t_stack **a, int rotate_count, int size,
 		int count_largest)
 {
 	if (!*a)
@@ -27,7 +27,7 @@ void	exec_rotate_1(t_stack **a, int rotate_count, int size,
 	}
 }
 
-void	exec_rotate_2(t_stack **a, int rotate_count, int size,
+void	exec_rotate_1(t_stack **a, int rotate_count, int size,
 		int count_largest)
 {
 	if (!*a)

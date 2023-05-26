@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:40:09 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 16:30:06 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:27:59 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ void	sort_big_stack(t_stack **a, t_stack **b)
 		free_cost_tab(&table);
 		pa(a, b);
 	}
-	while (find_largest(a) != stack_size(a) - 1)
-		ra(a);
+	if (find_largest(a) > stack_size(a) / 2)
+	{
+		while (find_largest(a) != stack_size(a) - 1)
+			rra(a);
+	}
+	else
+	{
+		while (find_largest(a) != stack_size(a) - 1)
+			ra(a);
+	}
 }
 
 /*Auxiliar function to sort the stack of 5 different numbers 
@@ -58,12 +66,12 @@ void	sort_stack_of_5__aux_option(t_stack **a, t_stack **b, int i)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest;
-		exec_rotate_2(a, r_count, size, count_largest);
+		exec_rotate_1(a, r_count, size, count_largest);
 		pa(a, b);
 		if (count_largest >= size / 2)
 			r_count = size - count_largest;
 		else
 			r_count = count_largest + 1;
-		exec_rotate_1(a, r_count, size, count_largest);
+		exec_rotate_2(a, r_count, size, count_largest);
 	}
 }
