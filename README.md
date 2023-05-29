@@ -2,8 +2,6 @@
 PUSH_SWAP - 42 PROJECT
 </h1>
 
-
-
 ## Index
 
 - [Index](#index)
