@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   find_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:48:01 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 15:50:27 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:10:14 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*Iterates into the stack and returns the last node*/
-t_stack	*find_last_stack(t_stack *stack)
+t_stack	*find_tail(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);

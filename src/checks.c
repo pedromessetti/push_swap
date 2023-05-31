@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verifications.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 14:57:19 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:32:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_and_push(char **av, t_stack **a)
 		{
 			free_stack(a);
 			write(2, "Error\n", 6);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		if (!*a)
 			*a = add_number_to_stack(tmp);

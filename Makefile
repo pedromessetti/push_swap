@@ -11,11 +11,9 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g -I inc
 
-SRCS =	operations/push.c operations/swap.c operations/rotate.c operations/rev_rotate.c \
-		utils/stack_utils.c utils/big_sort_utils.c utils/cost_utils.c utils/ft_utils.c utils/sort_utils.c utils/find_utils.c \
-		sort/big_sort_aux.c sort/big_sort.c sort/small_sort.c \
-		verifications.c \
-		main.c
+SRCS =	src/op_push.c src/op_swap.c src/op_rotate.c src/op_rev_rotate.c \
+		src/stack_utils.c src/big_sort_utils.c src/cost_utils.c src/ft_utils.c src/small_sort_utils.c src/stack_utils2.c \
+		src/big_sort_utils2.c src/big_sort.c src/small_sort.c src/checks.c src/main.c
 
 OBJS = $(SRCS:.c=.o)
 

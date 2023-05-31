@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 17:03:03 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:09:34 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void					rrr(t_stack **a, t_stack **b);
 /* --- Stack functions --- */
 
 t_stack					*add_number_to_stack(int val);
-t_stack					*find_last_stack(t_stack *stack);
+t_stack					*find_tail(t_stack *stack);
 void					add_tail_to_stack(t_stack **stack_head,
 							t_stack *new_node);
 int						find_pos_on_stack(t_stack **stack, int val_to_find);

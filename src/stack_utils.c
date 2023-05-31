@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:02:33 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 17:02:53 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:10:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ void	add_tail_to_stack(t_stack **stack_head, t_stack *new_node)
 	if (!*stack_head)
 		*stack_head = new_node;
 	else
-		(find_last_stack(*stack_head))->next = new_node;
+		(find_tail(*stack_head))->next = new_node;
 }

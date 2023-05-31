@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:10:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 16:30:00 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:55:41 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*Sort in ascending order a stack with 2 different numbers*/
+/*Swap the numbers*/
 void	sort_stack_of_2(t_stack **a)
 {
 	if ((*a)->val > (*a)->next->val)
