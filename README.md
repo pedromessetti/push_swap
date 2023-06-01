@@ -76,11 +76,20 @@ If the stack only have 2 numbers simple execute a `sa()` and it is sorted. If ha
 
 For 5 random numbers, the algorithm is pretty simple: send the first 2 numbers to stack B using `pb()`, sort the stack A using the logic for sort 3 numbers, calcultes and choose the correct rotation for stack A to recive the numbers in stack B in the correct order, then `pa()` and stack A is sorted.
 
-When the stack A has more than 5 numbers the program always use the same algorithm. Basically it's a cost calculation that gives us the best movement to execute given the numbers on stack A and B.
-
-At the end, the stack A is sorted in ascending order and stack B is empty.
+When the stack A has more than 5 numbers the program always use the same algorithm. Basically it's a cost calculation that choose the best movement to execute given the numbers on stack A and B. At start the algorithm will calculate a medium value between all the numbers in the stack A and send all the numbers that are inferior to this medium value to stack B using `pb()` and the numbers that are higher are send to the bottom of stack A using `ra()`, constantly repeating this process until stack A has only 5 elements. Then sort the stack A using the algorithm for sorting 5 numbers. After stack A is sorted the program starts to calculate the best cost for choose the best movement inside of a while loop until stack B is empty. Then just correct choose the best rotate movement depending on the position of the biggest element on the stack. At the end, the stack A is sorted in ascending order and stack B is empty.
 </p>
 
+## Complexity 
+
+<p>
+
+This algorithm sorts:
+- 100 numbers with an average of 600 moves.
+- 500 numbers with an average of 5000 moves.
+- 1000 numbers with an average of X moves.
+
+It's a perfect algorithm for numbers in a range, while the input number is higher the complexity changes.
+</p>
 
 ## Author
 | [<img src="https://avatars.githubusercontent.com/u/105685220?v=4" width=115><br><sub>Pedro Vinicius Messetti</sub>](https://github.com/pedromessetti) |
