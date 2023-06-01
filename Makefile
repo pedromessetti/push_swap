@@ -9,9 +9,9 @@ NAME = push_swap
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -I inc
+CFLAGS = -Wall -Wextra -Werror -g -I inc #-fsanitize=address
 
-SRCS =	src/op_push.c src/op_swap.c src/op_rotate.c src/op_rev_rotate.c \
+SRCS =	src/operations/push.c src/operations/swap.c src/operations/rotate.c src/operations/rev_rotate.c \
 		src/stack_utils.c src/big_sort_utils.c src/cost_utils.c src/ft_utils.c src/small_sort_utils.c src/stack_utils2.c \
 		src/big_sort_utils2.c src/big_sort.c src/small_sort.c src/checks.c src/main.c
 

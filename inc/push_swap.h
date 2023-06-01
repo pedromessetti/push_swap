@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:34:20 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/31 16:09:34 by pedro            ###   ########.fr       */
+/*   Updated: 2023/06/01 15:49:15 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
+/* --- Dependencies Libs --- */
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+/* --- Linked list structures --- */
 
 typedef struct s_stack
 {
@@ -26,33 +30,36 @@ typedef struct s_stack
 	struct s_stack		*next;
 }						t_stack;
 
-typedef struct t_cost_tab
+typedef struct s_cost_tab
 {
 	int					val;
 	int					bf;
 	int					cost;
-	struct t_cost_tab	*next;
+	struct s_cost_tab	*next;
 }						t_cost_tab;
 
 /* --- General functions --- */
 
 size_t					ft_strlen(const char *s);
 long					ft_atoi(const char *nptr);
-int						is_digit(char c);
-int						is_numeric(char *s);
+int						ft_is_digit(char c);
+int						ft_str_is_num(char *s);
 
 /* --- Movement functions --- */
 
 void					pb(t_stack **a, t_stack **b);
 void					pa(t_stack **a, t_stack **b);
+
 void					swap(t_stack **stack);
 void					sa(t_stack **a);
 void					sb(t_stack **b);
 void					ss(t_stack **a, t_stack **b);
+
 void					rotate(t_stack **stack);
 void					ra(t_stack **a);
 void					rb(t_stack **b);
 void					rr(t_stack **a, t_stack **b);
+
 void					reverse_rotate(t_stack **stack);
 void					rra(t_stack **a);
 void					rrb(t_stack **b);
@@ -67,12 +74,14 @@ void					add_tail_to_stack(t_stack **stack_head,
 int						find_pos_on_stack(t_stack **stack, int val_to_find);
 int						stack_size(t_stack **stack);
 void					free_stack(t_stack **stack);
+int						find_largest(t_stack **stack);
+int						find_smallest(t_stack **stack);
 
-/* Cost Functions */
+/* --- Cost Functions --- */
 
 t_cost_tab				*add_cost(int val, int bf, int cost);
 t_cost_tab				*find_last_cost(t_cost_tab *cost_table);
-void					add_tail_to_cost_table(t_cost_tab **table_head,
+void	add_tail_to_cost_table(t_cost_tab **table_head,
 							t_cost_tab *new_node);
 void					free_cost_tab(t_cost_tab **cost_tab);
 
@@ -80,10 +89,7 @@ void					free_cost_tab(t_cost_tab **cost_tab);
 
 void					sort_stack_of_2(t_stack **a);
 void					sort_stack_of_3(t_stack **a);
-void					sort_stack_of_5(t_stack **a, t_stack **b, int option);
-void					sort_stack_of_5__aux(t_stack **a, t_stack **b);
-void					sort_stack_of_5__aux_option(t_stack **a, t_stack **b,
-							int i);
+void					sort_stack_of_5(t_stack **a, t_stack **b);
 void					sort_big_stack(t_stack **a, t_stack **b);
 
 /* --- Verification functions --- */
@@ -93,10 +99,8 @@ int						check_for_dup(long tmp, char **av, int i);
 void					define_sort(t_stack **a, t_stack **b);
 int						stack_is_sorted(t_stack **stack);
 
-/* Auxiliar functions */
+/* --- Auxiliar functions --- */
 
-int						find_largest(t_stack **stack);
-int						find_smallest(t_stack **stack);
 int						sum_val(t_stack **a);
 int						find_bf(t_stack **a, int val);
 int						calc_cost(int num, int bf, t_stack **a, t_stack **b);

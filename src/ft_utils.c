@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:26:12 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/19 15:52:42 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:36:51 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-	i = 0;
-	while (s[i])
-		i++;
+	i = -1;
+	while (s[++i])
+		;
 	return (i);
 }
 
@@ -44,7 +44,7 @@ long	ft_atoi(const char *nptr)
 		sign = -1;
 		i++;
 	}
-	while (is_digit(nptr[i]))
+	while (ft_is_digit(nptr[i]))
 	{
 		result *= 10;
 		result += nptr[i] - 48;
@@ -56,18 +56,18 @@ long	ft_atoi(const char *nptr)
 /* Check if there is a numeric character in the string pointed by s
    Return 1 if the string is a numeric char
    Return 0 if find something else */
-int	is_numeric(char *s)
+int	ft_str_is_num(char *s)
 {
 	int	i;
 
 	i = 0;
 	if (s[0] == '\0')
 		return (0);
-	if (s[0] == 45 && is_digit(s[1]))
+	if (s[0] == 45 && ft_is_digit(s[1]))
 		i++;
 	while (s[i])
 	{
-		if (!is_digit(s[i]))
+		if (!ft_is_digit(s[i]))
 			return (0);
 		i++;
 	}
@@ -77,7 +77,7 @@ int	is_numeric(char *s)
 /* Check if the char is a numeric character
    Return 1 if is a numeric char
    Return 0 if is something else */
-int	is_digit(char c)
+int	ft_is_digit(char c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);

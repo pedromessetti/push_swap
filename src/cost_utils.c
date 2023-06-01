@@ -6,7 +6,7 @@
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:42:27 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 17:02:48 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:38:13 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_cost_tab(t_cost_tab **table)
 {
 	t_cost_tab	*tmp;
 
-	if (!table)
+	if (!*table)
 		return ;
 	while (*table)
 	{

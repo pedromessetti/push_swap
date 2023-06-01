@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   big_sort_aux.c                                     :+:      :+:    :+:   */
+/*   big_sort_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 05:15:25 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/19 15:56:56 by pmessett         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:31:21 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_initial_moves(t_stack **a, t_stack **b)
 	size_a = 0;
 	sum = 0;
 	med = 0;
-	while (stack_size(a) > 5)
+	while (stack_size(a) > 3)
 	{
 		size_a = stack_size(a);
 		sum = sum_val(a);

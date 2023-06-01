@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verifications.c                                    :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:40:13 by pmessett          #+#    #+#             */
-/*   Updated: 2023/05/31 14:32:24 by pedro            ###   ########.fr       */
+/*   Updated: 2023/06/01 11:23:38 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_and_push(char **av, t_stack **a)
 	while (av[++i])
 	{
 		tmp = ft_atoi(av[i]);
-		if (!is_numeric(av[i]) || check_for_dup(tmp, av, i) || (tmp > INT_MAX
+		if (!ft_str_is_num(av[i]) || check_for_dup(tmp, av, i) || (tmp > INT_MAX
 				|| tmp < INT_MIN))
 		{
 			free_stack(a);
@@ -61,7 +61,7 @@ void	define_sort(t_stack **a, t_stack **b)
 	else if (stack_size(a) <= 3)
 		sort_stack_of_3(a);
 	else if (stack_size(a) <= 5)
-		sort_stack_of_5(a, b, 0);
+		sort_stack_of_5(a, b);
 	else
 		sort_big_stack(a, b);
 }

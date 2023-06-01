@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pmessett <pmessett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:10:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/05/31 14:55:41 by pedro            ###   ########.fr       */
+/*   Updated: 2023/06/01 14:42:39 by pmessett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,16 @@ void	sort_stack_of_3(t_stack **a)
 }
 
 /*Main function to sort a stack of 5 different numbers*/
-void	sort_stack_of_5(t_stack **a, t_stack **b, int option)
-{
-	while (stack_size(a) > 3)
-		pb(a, b);
-	sort_stack_of_3(a);
-	if (option)
-	{
-		sort_stack_of_5__aux_option(a, b, 3);
-		return ;
-	}
-	sort_stack_of_5__aux(a, b);
-}
-
-/*Auxiliar function to sort the stack of 5 different numbers 
-(stack A must be already in ascending order)*/
-void	sort_stack_of_5__aux(t_stack **a, t_stack **b)
+void	sort_stack_of_5(t_stack **a, t_stack **b)
 {
 	t_stack	*tmp;
 	int		size;
 	int		count_largest;
 	int		r_count;
 
+	while (stack_size(a) > 3)
+		pb(a, b);
+	sort_stack_of_3(a);
 	while (*b)
 	{
 		size = stack_size(a);

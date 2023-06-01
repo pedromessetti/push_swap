@@ -8,6 +8,7 @@ PUSH_SWAP - 42 PROJECT
 - [Description :clipboard:](#description-clipboard)
 - [Allowed movements](#allowed-movements)
 - [Operation :wrench:](#operation-wrench)
+- [Conclusion](#conclusion)
 - [Author](#author)
 
 ## Description :clipboard:
@@ -76,19 +77,37 @@ If the stack only have 2 numbers simple execute a `sa()` and it is sorted. If ha
 
 For 5 random numbers, the algorithm is pretty simple: send the first 2 numbers to stack B using `pb()`, sort the stack A using the logic for sort 3 numbers, calcultes and choose the correct rotation for stack A to recive the numbers in stack B in the correct order, then `pa()` and stack A is sorted.
 
-When the stack A has more than 5 numbers the program always use the same algorithm. Basically it's a cost calculation that choose the best movement to execute given the numbers on stack A and B. At start the algorithm will calculate a medium value between all the numbers in the stack A and send all the numbers that are inferior to this medium value to stack B using `pb()` and the numbers that are higher are send to the bottom of stack A using `ra()`, constantly repeating this process until stack A has only 5 elements. Then sort the stack A using the algorithm for sorting 5 numbers. After stack A is sorted the program starts to calculate the best cost for choose the best movement inside of a while loop until stack B is empty. Then just correct choose the best rotate movement depending on the position of the biggest element on the stack. At the end, the stack A is sorted in ascending order and stack B is empty.
+When the stack A has more than 5 numbers the program always use the same algorithm. At start the algorithm will calculate the medium value between all the numbers in stack A and then send the numbers that are inferior to this medium value to stack B using `pb()` and the numbers that are higher are send to the bottom of stack A using `ra()`, constantly repeating this process until stack A has only 3 elements. Then sort the stack A using the algorithm for sorting 3 numbers.
+
+After stack A is sorted the program enters in a loop, what happens inside this loop is:
+
+- Creates a cost table to store:
+
+|                                   **COST TABLE**                                   |
+| :--------------------------------------------------------------------------------: |
+|                     Number in stack B that it's been analizing                     |
+|  Greater number in stack A that has the most closer value of the number analized   |
+| Sum of the movements to get the number in stack B and the number in stack A to top |
+|                     Pointer to the next node of the cost table                     |
+
+- Once the cost table are set the program knows wich number has the best cost to be sendeed to the top of his stack.
+- The number that has the least amount of movements to get to the top and his best friend are moved to the top of their stacks and then execute `pa()`.
+- After that free the memory allocated to the cost table.
+- Constantly repeating this process unitll stack B is empty.
+
+After that the stack A is almost sorted, now the program choose the best rotation movement based on the position of the biggest element on the stack. At the end of this process the stack A is sorted in ascending order and stack B is empty.
 </p>
 
-## Complexity 
+## Conclusion
 
 <p>
 
 This algorithm sorts:
-- 100 numbers with an average of 600 moves.
-- 500 numbers with an average of 5000 moves.
-- 1000 numbers with an average of X moves.
+- 100 numbers with an average of 610 moves.
+- 500 numbers with an average of 4900 moves.
+- 1000 numbers with an average of 12600 moves.
 
-It's a perfect algorithm for numbers in a range, while the input number is higher the complexity changes.
+It's a good algorithm for numbers inside of a range, when the input number is higher than this range the complexity changes, after a certain input size, the algorithm complexity is O(n*n).
 </p>
 
 ## Author
