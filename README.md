@@ -1,5 +1,5 @@
 <h1 align="center">
-PUSH_SWAP - 42 PROJECT
+PUSH_SWAP
 </h1>
 
 ## Index
